@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EducationMauiApp.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnPlatform WinUI=auto}"/>
+            <RowDefinition Height="{OnPlatform Android=auto}"/>
+        </Grid.RowDefinitions>
+        <FlexLayout Grid.Row="{OnPlatform WinUI=0, Android=1}">
+            <Button Text="Не нажимай"
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    Margin="10"/>
+
+        </FlexLayout>
+        <AbsoluteLayout Grid.Row="{OnPlatform WinUI=1, Android=0}"
+                        BackgroundColor="AntiqueWhite"/>
+    </Grid>
+</ContentPage>
