@@ -1,11 +1,14 @@
-﻿namespace EducationMauiApp;
+﻿using EducationMauiApp.ViewModels;
+
+namespace EducationMauiApp;
 
 public partial class App : Application
 {
-	public App()
+	public static GraphLayoutViewModel GraphLayoutViewModel { get; } = (GraphLayoutViewModel)Current.Resources[nameof(GraphLayoutViewModel)];
+    public App()
 	{
 		InitializeComponent();
-
-		MainPage = new AppShell();
+		//GraphLayoutViewModel = (GraphLayoutViewModel)Current.Resources[nameof(GraphLayoutViewModel)];
+        MainPage = new AppShell();
 	}
 }

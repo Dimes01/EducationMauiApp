@@ -1,19 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EducationMauiApp.MainPage">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
+             xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
+			 x:Class="EducationMauiApp.MainPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{OnPlatform WinUI=auto}"/>
             <RowDefinition Height="{OnPlatform Android=auto}"/>
         </Grid.RowDefinitions>
-        <FlexLayout Grid.Row="{OnPlatform WinUI=0, Android=1}">
-            <Button Text="Не нажимай"
-                    HorizontalOptions="Center" VerticalOptions="Center"
-                    Margin="10"/>
+        <FlexLayout
+            Grid.Row="{OnPlatform WinUI=0, Android=1}"
+            BackgroundColor="{StaticResource Secondary}">
+            <!--<RadioButton 
+				Value="Nodes" GroupName="SelectedCreatedElements"
+                Content="Ноды" TextColor="{StaticResource White}"
+				Margin="3"/>
+            <RadioButton 
+				Value="Edges" GroupName="SelectedCreatedElements"
+                Content="Рёбра" TextColor="{StaticResource White}"
+				Margin="3"/>-->
 
         </FlexLayout>
-        <AbsoluteLayout Grid.Row="{OnPlatform WinUI=1, Android=0}"
-                        BackgroundColor="AntiqueWhite"/>
+        <AbsoluteLayout 
+            BindingContext="{StaticResource GraphLayoutViewModel}"
+            BindableLayout.ItemsSource="{Binding Nodes, Mode=OneWay}"
+			Grid.Row="{OnPlatform WinUI=1, Android=0}"
+			BackgroundColor="{StaticResource Primary}">
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </AbsoluteLayout.GestureRecognizers>
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <!--<Path BindableLayout.ItemTemplate="{Binding}"-->
+                    <Path Fill="{Binding Fill}"
+                          Stroke="{Binding Stroke}"
+                          StrokeThickness="{Binding StrokeThickness}"
+                          Data="{Binding Geometry}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </AbsoluteLayout>
+
     </Grid>
 </ContentPage>
