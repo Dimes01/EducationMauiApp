@@ -12,14 +12,14 @@
         <FlexLayout
             Grid.Row="{OnPlatform WinUI=0, Android=1}"
             BackgroundColor="{StaticResource Secondary}">
-            <!--<RadioButton 
+            <RadioButton 
 				Value="Nodes" GroupName="SelectedCreatedElements"
                 Content="Ноды" TextColor="{StaticResource White}"
 				Margin="3"/>
             <RadioButton 
 				Value="Edges" GroupName="SelectedCreatedElements"
                 Content="Рёбра" TextColor="{StaticResource White}"
-				Margin="3"/>-->
+				Margin="3"/>
 
         </FlexLayout>
         <AbsoluteLayout 

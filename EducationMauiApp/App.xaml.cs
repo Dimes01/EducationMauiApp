@@ -4,7 +4,7 @@ namespace EducationMauiApp;
 
 public partial class App : Application
 {
-	public static GraphLayoutViewModel GraphLayoutViewModel { get; private set; }
+	internal static GraphLayoutViewModel GraphLayoutViewModel { get; private set; }
     public App()
 	{
 		InitializeComponent();

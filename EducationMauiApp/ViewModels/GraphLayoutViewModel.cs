@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace EducationMauiApp.ViewModels
 {
-    public class GraphLayoutViewModel
+    internal class GraphLayoutViewModel
     {
         private Geometry CreatedGeometry { get; set; }
         public ObservableCollection<NodeElement> Nodes { get; private set; } = new ObservableCollection<NodeElement>();
