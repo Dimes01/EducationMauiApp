@@ -10,7 +10,9 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <vm:GraphLayoutViewModel x:Key="GraphLayoutViewModel"/>
+            <vm:ConditionsViewModel x:Key="ConditionsViewModel"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

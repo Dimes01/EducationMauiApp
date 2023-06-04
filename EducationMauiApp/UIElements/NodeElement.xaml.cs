@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls.Shapes;
+using System.Windows.Input;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace EducationMauiApp.UIElements;

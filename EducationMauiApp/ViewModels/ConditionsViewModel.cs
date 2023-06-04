@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls.Shapes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace EducationMauiApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-
+        public CreatedElements CreatedElement { get; set; }
     }
+
+    public enum CreatedElements
+    {
+        Node, Edge
+    };
 }

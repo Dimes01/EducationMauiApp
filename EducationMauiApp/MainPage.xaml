@@ -26,17 +26,18 @@
             BindingContext="{StaticResource GraphLayoutViewModel}"
             BindableLayout.ItemsSource="{Binding Nodes, Mode=OneWay}"
 			Grid.Row="{OnPlatform WinUI=1, Android=0}"
-			BackgroundColor="{StaticResource Primary}">
-            <AbsoluteLayout.GestureRecognizers>
+			BackgroundColor="{StaticResource Primary}"
+            HandlerChanged="GraphLayout_HandlerChanged"
+            HandlerChanging="GraphLayout_HandlerChanging">
+            <!--<AbsoluteLayout.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </AbsoluteLayout.GestureRecognizers>
+            </AbsoluteLayout.GestureRecognizers>-->
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <!--<Path BindableLayout.ItemTemplate="{Binding}"-->
-                    <Path Fill="{Binding Fill}"
-                          Stroke="{Binding Stroke}"
-                          StrokeThickness="{Binding StrokeThickness}"
-                          Data="{Binding Geometry}"/>
+                    <Path Fill="{Binding Fill, Mode=OneWay}"
+                          Stroke="{Binding Stroke, Mode=OneWay}"
+                          StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+                          Data="{Binding Geometry, Mode=OneWay}"/>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </AbsoluteLayout>
