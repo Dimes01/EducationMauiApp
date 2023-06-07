@@ -20,27 +20,30 @@
 				Value="Edges" GroupName="SelectedCreatedElements"
                 Content="Рёбра" TextColor="{StaticResource White}"
 				Margin="3"/>
-
         </FlexLayout>
         <AbsoluteLayout 
-            BindingContext="{StaticResource GraphLayoutViewModel}"
-            BindableLayout.ItemsSource="{Binding Nodes, Mode=OneWay}"
-			Grid.Row="{OnPlatform WinUI=1, Android=0}"
-			BackgroundColor="{StaticResource Primary}"
-            HandlerChanged="GraphLayout_HandlerChanged"
-            HandlerChanging="GraphLayout_HandlerChanging">
-            <!--<AbsoluteLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </AbsoluteLayout.GestureRecognizers>-->
+            Grid.Row="{OnPlatform WinUI=1, Android=0}"
+            Background="{StaticResource PrimaryBrush}"
+            BindableLayout.ItemsSource="{Binding 
+                Source={StaticResource GraphLayoutViewModel}, 
+                Path=GraphElements, 
+                Mode=OneWay}"
+            Padding="10">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Path Fill="{Binding Fill, Mode=OneWay}"
-                          Stroke="{Binding Stroke, Mode=OneWay}"
-                          StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-                          Data="{Binding Geometry, Mode=OneWay}"/>
+                    <elem:NodeElement>
+                        <elem:NodeElement.BindingContext>
+                            <RelativeSource Mode="Self"/>
+                        </elem:NodeElement.BindingContext>
+                    </elem:NodeElement>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+            </AbsoluteLayout.GestureRecognizers>
         </AbsoluteLayout>
-
     </Grid>
 </ContentPage>
+
+
+<!--BindingContext="{Binding Source={RelativeSource Mode=Self}}"-->

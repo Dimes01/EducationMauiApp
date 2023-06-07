@@ -1,4 +1,5 @@
-﻿using EducationMauiApp.UIElements;
+﻿using EducationMauiApp.Interfaces;
+using EducationMauiApp.UIElements;
 using Microsoft.Maui.Controls.Shapes;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace EducationMauiApp.ViewModels
     internal class GraphLayoutViewModel
     {
         private Point[] edgesPoint = new Point[] { Point.Zero, Point.Zero };
-        public ObservableCollection<NodeElement> Nodes { get; private set; } = new ObservableCollection<NodeElement>();
+        public ObservableCollection<IGraphViewElement> GraphElements { get; private set; } = new ObservableCollection<IGraphViewElement>();
+
+        public NodeElement SelectedNode { get; set; }
 
         private ICommand addGraphElementCommand;
         public ICommand AddGraphElementCommand => addGraphElementCommand ??= new Command(f =>
@@ -22,7 +25,7 @@ namespace EducationMauiApp.ViewModels
             var position = (Point)f;
             if (App.ConditionsViewModel.CreatedElement == CreatedElements.Node)
             {
-                Nodes.Add(new NodeElement { Geometry = CreatedDefaultEllipse(position) });
+                GraphElements.Add(new NodeElement { Position = position });
             }
             else if (edgesPoint[0] == Point.Zero)
             {

@@ -1,4 +1,6 @@
-﻿namespace EducationMauiApp;
+﻿using EducationMauiApp.UIElements;
+
+namespace EducationMauiApp;
 
 public partial class MainPage : ContentPage
 {
@@ -6,17 +8,16 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
+    private void GraphLayout_Tapped(object sender, TappedEventArgs e)
+    {
+        var position = (Point)e.GetPosition((View)sender);
+        App.GraphLayoutViewModel.AddGraphElementCommand.Execute(position);
+    }
 
-    //private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    //{
-    //    Point position = (Point)e.GetPosition((Layout)sender);
-    //    App.GraphLayoutViewModel.AddGraphElementCommand.Execute(position);
-    //}
-
-    partial void ChangedHandler(object sender, EventArgs e);
-    partial void ChangingHandler(object sender, HandlerChangingEventArgs e);
-
-    private void GraphLayout_HandlerChanged(object sender, EventArgs e) => ChangedHandler(sender, e);
-    private void GraphLayout_HandlerChanging(object sender, HandlerChangingEventArgs e) => ChangingHandler(sender, e);
+    private void GraphElement_Tapped(object sender, TappedEventArgs e)
+    {
+        App.GraphLayoutViewModel.SelectedNode.IsSelected = false;
+        App.GraphLayoutViewModel.SelectedNode = (NodeElement)sender;
+        App.GraphLayoutViewModel.SelectedNode.IsSelected = true;
+    }
 }
-

@@ -58,9 +58,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Platforms\Windows\MainPage.xaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
 	  <Compile Update="UIElements\NodeElement.xaml.cs">
 	    <DependentUpon>NodeElement.xaml</DependentUpon>
 	  </Compile>

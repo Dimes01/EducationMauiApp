@@ -18,5 +18,5 @@ public partial class App : Application
         ConditionsViewModel = (ConditionsViewModel)Current.Resources[nameof(ConditionsViewModel)];
 
         MainPage = new AppShell();
-	}
+    }
 }

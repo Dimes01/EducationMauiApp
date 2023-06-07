@@ -53,8 +53,9 @@
 	<Color x:Key="Blue100Accent">#163172</Color>
 	<Color x:Key="Blue200Accent">#1E56A0</Color>
 	<Color x:Key="Blue300Accent">#D6E4F0</Color>
-
+    
     <SolidColorBrush x:Key="FillNodeBrush" Color="{StaticResource Yellow100Accent}"/>
     <SolidColorBrush x:Key="StrokeNodeBrush" Color="{StaticResource Green600}"/>
-    
+    <SolidColorBrush x:Key="SelectStrokeNodeBrush" Color="{StaticResource Yellow100Accent}"/>
+
 </ResourceDictionary>
