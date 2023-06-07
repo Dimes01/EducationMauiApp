@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EducationMauiApp.UIElements.NodeElement">
+             x:Class="EducationMauiApp.UIElements.NodeElement"
+             BindingContext="{Binding Source={RelativeSource Mode=Self}}">
     <Path 
         Fill="{Binding Fill, Mode=OneWay}"
         Stroke="{Binding Stroke, Mode=OneWay}"
         StrokeThickness="{Binding StrokeThickness, Mode=OneWay}">
         <Path.Data>
-            <!--<EllipseGeometry 
-                Center="475,634"
-                RadiusX="10"
-                RadiusY="10"/>-->
             <EllipseGeometry 
+                Center="475,100"
+                RadiusX="10"
+                RadiusY="10"/>
+            <!--<EllipseGeometry 
                 Center="{Binding Position, Mode=OneWay}"
                 RadiusX="{Binding Radius, Mode=OneWay}"
-                RadiusY="{Binding Radius, Mode=OneWay}"/>
+                RadiusY="{Binding Radius, Mode=OneWay}"/>-->
         </Path.Data>
     </Path>
-    <!--<Path 
-            Fill="Transparent"
-            Stroke="{StaticResource SelectStrokeNodeBrush}"
-            StrokeThickness="2"
-            IsVisible="{Binding IsSelected, Mode=OneWay}">   
-            <Path.Data>
-                <EllipseGeometry 
-                    Center="{Binding Position, Mode=OneWay}"
-                    RadiusX="{Binding SelectRadius, Mode=OneWay}"
-                    RadiusY="{Binding SelectRadius, Mode=OneWay}"/>
-            </Path.Data>
-        </Path>-->
-
 </ContentView>

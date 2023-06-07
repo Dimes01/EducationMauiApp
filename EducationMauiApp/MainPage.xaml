@@ -1,48 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
-             xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
+			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
+			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{OnPlatform WinUI=auto}"/>
-            <RowDefinition Height="{OnPlatform Android=auto}"/>
-        </Grid.RowDefinitions>
-        <FlexLayout
-            Grid.Row="{OnPlatform WinUI=0, Android=1}"
-            BackgroundColor="{StaticResource Secondary}">
-            <RadioButton 
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="{OnPlatform WinUI=auto}"/>
+			<RowDefinition Height="{OnPlatform Android=auto}"/>
+		</Grid.RowDefinitions>
+		<FlexLayout
+			Grid.Row="{OnPlatform WinUI=0, Android=1}"
+			BackgroundColor="{StaticResource Secondary}">
+			<RadioButton 
 				Value="Nodes" GroupName="SelectedCreatedElements"
-                Content="Ноды" TextColor="{StaticResource White}"
+				Content="Ноды" TextColor="{StaticResource White}"
 				Margin="3"/>
-            <RadioButton 
+			<RadioButton 
 				Value="Edges" GroupName="SelectedCreatedElements"
-                Content="Рёбра" TextColor="{StaticResource White}"
+				Content="Рёбра" TextColor="{StaticResource White}"
 				Margin="3"/>
-        </FlexLayout>
-        <AbsoluteLayout 
-            Grid.Row="{OnPlatform WinUI=1, Android=0}"
-            Background="{StaticResource PrimaryBrush}"
-            BindableLayout.ItemsSource="{Binding 
-                Source={StaticResource GraphLayoutViewModel}, 
-                Path=GraphElements, 
-                Mode=OneWay}"
-            Padding="10">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <elem:NodeElement>
-                        <elem:NodeElement.BindingContext>
-                            <RelativeSource Mode="Self"/>
-                        </elem:NodeElement.BindingContext>
-                    </elem:NodeElement>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-            <AbsoluteLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-            </AbsoluteLayout.GestureRecognizers>
+		</FlexLayout>
+		<AbsoluteLayout 
+			Grid.Row="{OnPlatform WinUI=1, Android=0}"
+			Background="{StaticResource PrimaryBrush}"
+			BindableLayout.ItemsSource="{Binding 
+				Source={StaticResource GraphLayoutViewModel}, 
+				Path=GraphElements, 
+				Mode=OneWay}"
+			Padding="10">
+			<BindableLayout.ItemTemplate>
+				<DataTemplate>
+					<elem:NodeElement BindingContext="{Binding Source={RelativeSource Mode=Self}}"
+									  BindingContextChanged="NodeElement_BindingContextChanged"/>
+				</DataTemplate>
+			</BindableLayout.ItemTemplate>
+			<AbsoluteLayout.GestureRecognizers>
+				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+			</AbsoluteLayout.GestureRecognizers>
+            <Path Fill="{StaticResource FillNodeBrush}"
+                  Stroke="{StaticResource StrokeNodeBrush}"
+                  StrokeThickness="2">
+                <Path.Data>
+                    <EllipseGeometry 
+                        Center="600,100"
+                        RadiusX="10"
+                        RadiusY="10"/>
+                </Path.Data>
+            </Path>
         </AbsoluteLayout>
-    </Grid>
+	</Grid>
 </ContentPage>
 
 

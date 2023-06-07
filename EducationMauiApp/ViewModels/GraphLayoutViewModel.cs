@@ -25,7 +25,8 @@ namespace EducationMauiApp.ViewModels
             var position = (Point)f;
             if (App.ConditionsViewModel.CreatedElement == CreatedElements.Node)
             {
-                GraphElements.Add(new NodeElement { Position = position });
+                var node = new NodeElement { Position = position };
+                GraphElements.Add(node);
             }
             else if (edgesPoint[0] == Point.Zero)
             {

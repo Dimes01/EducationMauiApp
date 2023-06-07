@@ -20,4 +20,9 @@ public partial class MainPage : ContentPage
         App.GraphLayoutViewModel.SelectedNode = (NodeElement)sender;
         App.GraphLayoutViewModel.SelectedNode.IsSelected = true;
     }
+
+    private void NodeElement_BindingContextChanged(object sender, EventArgs e)
+    {
+
+    }
 }
