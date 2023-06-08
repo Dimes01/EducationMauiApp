@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
              x:Class="EducationMauiApp.UIElements.NodeElement"
-             BindingContext="{Binding Source={RelativeSource Mode=Self}}">
-    <Path 
+             x:Name="Root">
+    <Path
+        BindingContext="{x:Reference Root}"
         Fill="{Binding Fill, Mode=OneWay}"
         Stroke="{Binding Stroke, Mode=OneWay}"
         StrokeThickness="{Binding StrokeThickness, Mode=OneWay}">
         <Path.Data>
             <EllipseGeometry 
-                Center="475,100"
+                BindingContext="{x:Reference Root}"
+                Center="{Binding Position, Mode=OneWay}"
                 RadiusX="10"
                 RadiusY="10"/>
-            <!--<EllipseGeometry 
-                Center="{Binding Position, Mode=OneWay}"
-                RadiusX="{Binding Radius, Mode=OneWay}"
-                RadiusY="{Binding Radius, Mode=OneWay}"/>-->
         </Path.Data>
     </Path>
 </ContentView>

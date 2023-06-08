@@ -16,13 +16,8 @@ public partial class MainPage : ContentPage
 
     private void GraphElement_Tapped(object sender, TappedEventArgs e)
     {
-        App.GraphLayoutViewModel.SelectedNode.IsSelected = false;
-        App.GraphLayoutViewModel.SelectedNode = (NodeElement)sender;
-        App.GraphLayoutViewModel.SelectedNode.IsSelected = true;
-    }
-
-    private void NodeElement_BindingContextChanged(object sender, EventArgs e)
-    {
-
+        //App.GraphLayoutViewModel.SelectedNode.IsSelected = false;
+        //App.GraphLayoutViewModel.SelectedNode = (NodeElement)sender;
+        //App.GraphLayoutViewModel.SelectedNode.IsSelected = true;
     }
 }

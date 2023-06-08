@@ -4,53 +4,46 @@
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
 			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="{OnPlatform WinUI=auto}"/>
-			<RowDefinition Height="{OnPlatform Android=auto}"/>
-		</Grid.RowDefinitions>
-		<FlexLayout
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnPlatform WinUI=auto}"/>
+            <RowDefinition Height="{OnPlatform Android=auto}"/>
+        </Grid.RowDefinitions>
+        <FlexLayout
 			Grid.Row="{OnPlatform WinUI=0, Android=1}"
 			BackgroundColor="{StaticResource Secondary}">
-			<RadioButton 
+            <RadioButton 
 				Value="Nodes" GroupName="SelectedCreatedElements"
 				Content="Ноды" TextColor="{StaticResource White}"
 				Margin="3"/>
-			<RadioButton 
+            <RadioButton 
 				Value="Edges" GroupName="SelectedCreatedElements"
 				Content="Рёбра" TextColor="{StaticResource White}"
 				Margin="3"/>
-		</FlexLayout>
-		<AbsoluteLayout 
+        </FlexLayout>
+        <AbsoluteLayout 
 			Grid.Row="{OnPlatform WinUI=1, Android=0}"
 			Background="{StaticResource PrimaryBrush}"
 			BindableLayout.ItemsSource="{Binding 
 				Source={StaticResource GraphLayoutViewModel}, 
 				Path=GraphElements, 
-				Mode=OneWay}"
-			Padding="10">
-			<BindableLayout.ItemTemplate>
-				<DataTemplate>
-					<elem:NodeElement BindingContext="{Binding Source={RelativeSource Mode=Self}}"
-									  BindingContextChanged="NodeElement_BindingContextChanged"/>
-				</DataTemplate>
-			</BindableLayout.ItemTemplate>
-			<AbsoluteLayout.GestureRecognizers>
-				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-			</AbsoluteLayout.GestureRecognizers>
-            <Path Fill="{StaticResource FillNodeBrush}"
-                  Stroke="{StaticResource StrokeNodeBrush}"
-                  StrokeThickness="2">
-                <Path.Data>
-                    <EllipseGeometry 
-                        Center="600,100"
-                        RadiusX="10"
-                        RadiusY="10"/>
-                </Path.Data>
-            </Path>
+				Mode=OneWay}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <elem:NodeElement 
+                        Position="{Binding Position}"
+                        Fill="{Binding Fill}"
+                        Stroke="{Binding Stroke}"
+                        StrokeThickness="{Binding StrokeThickness}">
+                        <elem:NodeElement.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GraphElement_Tapped"/>
+                        </elem:NodeElement.GestureRecognizers>
+                    </elem:NodeElement>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+            </AbsoluteLayout.GestureRecognizers>
         </AbsoluteLayout>
-	</Grid>
+    </Grid>
 </ContentPage>
-
-
-<!--BindingContext="{Binding Source={RelativeSource Mode=Self}}"-->

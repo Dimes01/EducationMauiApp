@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EducationMauiApp.UIElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,13 +25,6 @@ namespace EducationMauiApp.Interfaces
         
         static readonly BindableProperty StrokeThicknessProperty;
         public Brush StrokeThickness
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        static readonly BindableProperty GeometryProperty;
-        public Brush Geometry
         {
             get => throw new NotImplementedException();
             set => throw new NotImplementedException();

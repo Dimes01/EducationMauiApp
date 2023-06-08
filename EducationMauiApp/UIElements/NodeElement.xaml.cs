@@ -36,34 +36,10 @@ public partial class NodeElement : ContentView, IGraphViewElement
 	}
 
 
-	public static readonly BindableProperty PositionProperty = BindableProperty.Create(nameof(Position), typeof(Point), typeof(NodeElement), Point.Zero);
+	public static readonly BindableProperty PositionProperty = BindableProperty.Create(nameof(Position), typeof(Point), typeof(NodeElement));
 	public Point Position
 	{
 		get => (Point)GetValue(PositionProperty);
 		set => SetValue(PositionProperty, value);
-	}
-
-
-	public static readonly BindableProperty RadiusProperty = BindableProperty.Create(nameof(Radius), typeof(double), typeof(NodeElement), 10.0);
-	public double Radius
-	{
-		get => (double)GetValue(RadiusProperty);
-		set => SetValue(RadiusProperty, value);
-	}
-
-
-	public static readonly BindableProperty RadiusSelectedProperty = BindableProperty.Create(nameof(RadiusSelected), typeof(double), typeof(NodeElement), 12.0);
-	public double RadiusSelected
-	{
-		get => (double)GetValue(RadiusSelectedProperty);
-		set => SetValue(RadiusSelectedProperty, value);
-	}
-
-
-	public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(NodeElement), false);
-	public bool IsSelected
-	{
-		get => (bool)GetValue(IsSelectedProperty);
-		set => SetValue(IsSelectedProperty, value);
 	}
 }

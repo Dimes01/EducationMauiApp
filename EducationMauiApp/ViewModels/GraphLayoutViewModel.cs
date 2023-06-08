@@ -4,19 +4,41 @@ using Microsoft.Maui.Controls.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EducationMauiApp.ViewModels
 {
-    internal class GraphLayoutViewModel
+    internal class GraphLayoutViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+
         private Point[] edgesPoint = new Point[] { Point.Zero, Point.Zero };
         public ObservableCollection<IGraphViewElement> GraphElements { get; private set; } = new ObservableCollection<IGraphViewElement>();
 
         public NodeElement SelectedNode { get; set; }
+
+
+
+        //private Point position = new Point(100, 150);
+        //public Point Position
+        //{
+        //    get => position;
+        //    set
+        //    {
+        //        if (position == value) return;
+        //        position = value;
+        //        OnPropertyChanged(nameof(Position));
+        //    }
+        //}
+
+
 
         private ICommand addGraphElementCommand;
         public ICommand AddGraphElementCommand => addGraphElementCommand ??= new Command(f =>
