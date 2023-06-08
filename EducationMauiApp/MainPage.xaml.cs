@@ -1,6 +1,4 @@
-﻿using EducationMauiApp.UIElements;
-
-namespace EducationMauiApp;
+﻿namespace EducationMauiApp;
 
 public partial class MainPage : ContentPage
 {
