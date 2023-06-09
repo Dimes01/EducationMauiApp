@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
+             xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -12,12 +13,16 @@
 			Grid.Row="{OnPlatform WinUI=0, Android=1}"
 			BackgroundColor="{StaticResource Secondary}">
             <RadioButton 
-				Value="Nodes" GroupName="SelectedCreatedElements"
 				Content="Ноды" TextColor="{StaticResource White}"
+				Value="{vm:CreatedElements}" 
+                GroupName="SelectedCreatedElements"
+                CheckedChanged="RadioButton_CheckedChanged"
 				Margin="3"/>
             <RadioButton 
-				Value="Edges" GroupName="SelectedCreatedElements"
 				Content="Рёбра" TextColor="{StaticResource White}"
+				Value="{vm:CreatedElements}" 
+                GroupName="SelectedCreatedElements"
+                CheckedChanged="RadioButton_CheckedChanged"
 				Margin="3"/>
         </FlexLayout>
         <AbsoluteLayout 
@@ -29,15 +34,16 @@
 				Mode=OneWay}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <elem:NodeElement 
-                        Position="{Binding Position}"
-                        Fill="{Binding Fill}"
-                        Stroke="{Binding Stroke}"
-                        StrokeThickness="{Binding StrokeThickness}">
-                        <elem:NodeElement.GestureRecognizers>
+                    <elem:GraphViewElement 
+                        Fill="{Binding Fill, Mode=OneWay}"
+                        Stroke="{Binding Stroke, Mode=OneWay}"
+                        StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+                        Geometry="{Binding Geometry, Mode=OneWay}"
+                        GraphElement="{Binding GraphElement, Mode=OneWay}">
+                        <elem:GraphViewElement.GestureRecognizers>
                             <TapGestureRecognizer Tapped="GraphElement_Tapped"/>
-                        </elem:NodeElement.GestureRecognizers>
-                    </elem:NodeElement>
+                        </elem:GraphViewElement.GestureRecognizers>
+                    </elem:GraphViewElement>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
             <AbsoluteLayout.GestureRecognizers>

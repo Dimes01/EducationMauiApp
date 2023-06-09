@@ -58,18 +58,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="UIElements\NodeElement.xaml.cs">
-	    <DependentUpon>NodeElement.xaml</DependentUpon>
+	  <Compile Update="UIElements\GraphViewElement.xaml.cs">
+	    <DependentUpon>GraphViewElement.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="UIElements\EdgeElement.xaml">
+	  <MauiXaml Update="UIElements\GraphViewElement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="UIElements\NodeElement.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\GraphLib\GraphLib\GraphLib.csproj" />
 	</ItemGroup>
 
 </Project>

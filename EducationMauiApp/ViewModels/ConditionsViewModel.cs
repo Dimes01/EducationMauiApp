@@ -14,11 +14,11 @@ namespace EducationMauiApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public CreatedElements CreatedElement { get; set; }
+        public CreatedElements CreatedElement { get; set; } = CreatedElements.None;
     }
 
     public enum CreatedElements
     {
-        Node, Edge
+        Node, Edge, None
     };
 }

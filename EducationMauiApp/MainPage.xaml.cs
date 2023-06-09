@@ -1,4 +1,8 @@
-﻿namespace EducationMauiApp;
+﻿using EducationMauiApp.UIElements;
+using EducationMauiApp.ViewModels;
+using GraphLib.Models;
+
+namespace EducationMauiApp;
 
 public partial class MainPage : ContentPage
 {
@@ -9,13 +13,21 @@ public partial class MainPage : ContentPage
     private void GraphLayout_Tapped(object sender, TappedEventArgs e)
     {
         var position = (Point)e.GetPosition((View)sender);
-        App.GraphLayoutViewModel.AddGraphElementCommand.Execute(position);
+        if (App.GraphLayoutViewModel.AddNodeCommand.CanExecute(null))
+            App.GraphLayoutViewModel.AddNodeCommand.Execute(position);
     }
 
     private void GraphElement_Tapped(object sender, TappedEventArgs e)
     {
-        //App.GraphLayoutViewModel.SelectedNode.IsSelected = false;
-        //App.GraphLayoutViewModel.SelectedNode = (NodeElement)sender;
-        //App.GraphLayoutViewModel.SelectedNode.IsSelected = true;
+        var element = ((GraphViewElement)sender).GraphElement as Node;
+        if (element == null) return;
+        if (App.GraphLayoutViewModel.AddEdgeCommand.CanExecute(null))
+            App.GraphLayoutViewModel.AddEdgeCommand.Execute(element);
+    }
+
+    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        var radiobutton = (RadioButton)sender;
+        App.ConditionsViewModel.CreatedElement = (CreatedElements)radiobutton.Value;
     }
 }

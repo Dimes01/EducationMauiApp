@@ -1,67 +1,75 @@
-﻿using EducationMauiApp.Interfaces;
-using EducationMauiApp.UIElements;
+﻿using EducationMauiApp.UIElements;
+using GraphLib.Models;
 using Microsoft.Maui.Controls.Shapes;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EducationMauiApp.ViewModels
 {
     internal class GraphLayoutViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
-        private Point[] edgesPoint = new Point[] { Point.Zero, Point.Zero };
-        public ObservableCollection<IGraphViewElement> GraphElements { get; private set; } = new ObservableCollection<IGraphViewElement>();
-
-        public NodeElement SelectedNode { get; set; }
-
+		private const double radiusNode = 10;
+		private Edge tempEdge = new();
+		public ObservableCollection<GraphViewElement> GraphElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 
 
-        //private Point position = new Point(100, 150);
-        //public Point Position
-        //{
-        //    get => position;
-        //    set
-        //    {
-        //        if (position == value) return;
-        //        position = value;
-        //        OnPropertyChanged(nameof(Position));
-        //    }
-        //}
+		private ICommand addNodeCommand;
+		public ICommand AddNodeCommand => addNodeCommand ??= new Command(f =>
+		{
+			if (f is not Point) return;
+			var position = (Point)f;
+			if (App.ConditionsViewModel.CreatedElement == CreatedElements.Node)
+			{
+				var node = new Node(position);
+				var viewNode = new GraphViewElement 
+				{
+					Geometry = CreatedDefaultEllipse(node.Position),
+					GraphElement = node,
+					ZIndex = 50
+				};
+				viewNode.Margin = new Thickness(position.X - radiusNode, position.Y - radiusNode, 0, 0);
+				GraphElements.Add(viewNode);
+			}
+		}, f => App.ConditionsViewModel.CreatedElement == CreatedElements.Node);
 
 
-
-        private ICommand addGraphElementCommand;
-        public ICommand AddGraphElementCommand => addGraphElementCommand ??= new Command(f =>
-        {
-            if (f is not Point) return;
-            var position = (Point)f;
-            if (App.ConditionsViewModel.CreatedElement == CreatedElements.Node)
+		private ICommand addEdgeCommand;
+		public ICommand AddEdgeCommand => addEdgeCommand ??= new Command(f =>
+		{
+			if (f is not Node) return;
+			var node = (Node)f;
+            if (tempEdge.Nodes[0] == null)
             {
-                var node = new NodeElement { Position = position };
-                GraphElements.Add(node);
+                tempEdge.Nodes[0] = node;
             }
-            else if (edgesPoint[0] == Point.Zero)
+            else if (tempEdge.Nodes[1] == null)
             {
-                edgesPoint[0] = position;
-            }
-            else if (edgesPoint[1] == Point.Zero)
-            {
-                edgesPoint[1] = position;
-
+                tempEdge.Nodes[1] = node;
+                var viewEdge = new GraphViewElement
+                {
+                    Geometry = CreatedDefaultLine(tempEdge.Nodes[0].Position, tempEdge.Nodes[1].Position),
+					GraphElement = tempEdge,
+					ZIndex = 45
+                };
+				var margin = new Thickness();
+				if (tempEdge.Nodes[0].Position.X < tempEdge.Nodes[1].Position.X) margin.Left = tempEdge.Nodes[0].Position.X;
+				else margin.Left = tempEdge.Nodes[1].Position.X;
+                if (tempEdge.Nodes[0].Position.Y < tempEdge.Nodes[1].Position.Y) margin.Top = tempEdge.Nodes[0].Position.Y;
+                else margin.Top = tempEdge.Nodes[1].Position.Y;
+				viewEdge.Margin = margin;
+                GraphElements.Add(viewEdge);
+				tempEdge = new();
             }
         });
 
-        private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = 10, RadiusY = 10 };
-        private Geometry CreatedDefaultLine(Point start, Point end) => new LineGeometry { StartPoint = start, EndPoint = end };
-    }
+
+		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
+		private Geometry CreatedDefaultLine(Point start, Point end) => new LineGeometry { StartPoint = start, EndPoint = end };
+	}
 }
