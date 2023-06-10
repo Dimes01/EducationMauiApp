@@ -2,12 +2,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EducationMauiApp.UIElements.GraphViewElement"
-             x:Name="Root"
-             Background="Red">
+             x:Name="Root">
     <Path
         BindingContext="{x:Reference Root}"
         Fill="{Binding Fill, Mode=OneWay}"
         Stroke="{Binding Stroke, Mode=OneWay}"
         StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-        Data="{Binding Geometry, Mode=OneWay}"/>
+        Data="{Binding Geometry, Mode=OneWay}"
+        ZIndex="{Binding ZIndex, Mode=OneWay}"/>
 </ContentView>

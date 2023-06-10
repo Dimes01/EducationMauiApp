@@ -1,11 +1,5 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationMauiApp.ViewModels
 {
@@ -14,11 +8,6 @@ namespace EducationMauiApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public CreatedElements CreatedElement { get; set; } = CreatedElements.None;
+        public bool IsEditingMode { get; set; }
     }
-
-    public enum CreatedElements
-    {
-        Node, Edge, None
-    };
 }

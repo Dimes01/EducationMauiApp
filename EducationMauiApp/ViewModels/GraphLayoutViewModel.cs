@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace EducationMauiApp.ViewModels
 {
-    internal class GraphLayoutViewModel : INotifyPropertyChanged
+	internal class GraphLayoutViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -22,21 +22,18 @@ namespace EducationMauiApp.ViewModels
 		private ICommand addNodeCommand;
 		public ICommand AddNodeCommand => addNodeCommand ??= new Command(f =>
 		{
-			if (f is not Point) return;
+			if (f is not Point || !App.ConditionsViewModel.IsEditingMode) return;
 			var position = (Point)f;
-			if (App.ConditionsViewModel.CreatedElement == CreatedElements.Node)
-			{
-				var node = new Node(position);
-				var viewNode = new GraphViewElement 
-				{
-					Geometry = CreatedDefaultEllipse(node.Position),
-					GraphElement = node,
-					ZIndex = 50
-				};
-				viewNode.Margin = new Thickness(position.X - radiusNode, position.Y - radiusNode, 0, 0);
-				GraphElements.Add(viewNode);
-			}
-		}, f => App.ConditionsViewModel.CreatedElement == CreatedElements.Node);
+            var node = new Node(position);
+            var viewNode = new GraphViewElement
+            {
+                Geometry = CreatedDefaultEllipse(new Point(radiusNode, radiusNode)),
+                GraphElement = node,
+                ZIndex = 50,
+                Margin = new Thickness(position.X - radiusNode, position.Y - radiusNode, 0, 0)
+            };
+            GraphElements.Add(viewNode);
+        }, f => App.ConditionsViewModel.IsEditingMode);
 
 
 		private ICommand addEdgeCommand;
@@ -44,32 +41,44 @@ namespace EducationMauiApp.ViewModels
 		{
 			if (f is not Node) return;
 			var node = (Node)f;
-            if (tempEdge.Nodes[0] == null)
-            {
-                tempEdge.Nodes[0] = node;
-            }
-            else if (tempEdge.Nodes[1] == null)
-            {
-                tempEdge.Nodes[1] = node;
+			if (tempEdge.Nodes[0] == null)
+			{
+				tempEdge.Nodes[0] = node;
+			}
+			else if (tempEdge.Nodes[1] == null && node != tempEdge.Nodes[0])
+			{
+				tempEdge.Nodes[1] = node;
+				Point minCoor = new();
+				if (tempEdge.Nodes[0].Position.X < tempEdge.Nodes[1].Position.X) minCoor.X = tempEdge.Nodes[0].Position.X;
+				else minCoor.X = tempEdge.Nodes[1].Position.X;
+                if (tempEdge.Nodes[0].Position.Y < tempEdge.Nodes[1].Position.Y) minCoor.Y = tempEdge.Nodes[0].Position.Y;
+                else minCoor.Y = tempEdge.Nodes[1].Position.Y;
+
+				var pointStart = new Point(tempEdge.Nodes[0].Position.X - minCoor.X, tempEdge.Nodes[0].Position.Y - minCoor.Y);
+				var pointEnd = new Point(tempEdge.Nodes[1].Position.X - minCoor.X, tempEdge.Nodes[1].Position.Y - minCoor.Y);
                 var viewEdge = new GraphViewElement
                 {
-                    Geometry = CreatedDefaultLine(tempEdge.Nodes[0].Position, tempEdge.Nodes[1].Position),
-					GraphElement = tempEdge,
-					ZIndex = 45
+                    Geometry = CreatedDefaultLine(pointStart, pointEnd),
+                    GraphElement = tempEdge,
+                    ZIndex = 45,
+                    Margin = new Thickness(minCoor.X, minCoor.Y, 0, 0)
                 };
-				var margin = new Thickness();
-				if (tempEdge.Nodes[0].Position.X < tempEdge.Nodes[1].Position.X) margin.Left = tempEdge.Nodes[0].Position.X;
-				else margin.Left = tempEdge.Nodes[1].Position.X;
-                if (tempEdge.Nodes[0].Position.Y < tempEdge.Nodes[1].Position.Y) margin.Top = tempEdge.Nodes[0].Position.Y;
-                else margin.Top = tempEdge.Nodes[1].Position.Y;
-				viewEdge.Margin = margin;
                 GraphElements.Add(viewEdge);
 				tempEdge = new();
-            }
-        });
+			}
+		});
 
 
-		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
-		private Geometry CreatedDefaultLine(Point start, Point end) => new LineGeometry { StartPoint = start, EndPoint = end };
-	}
+        private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
+		private Geometry CreatedDefaultLine(Point start, Point end) 
+			=> new PathGeometry(
+				new PathFigureCollection
+				{
+                    new PathFigure
+                    {
+                        StartPoint = start,
+                        Segments = new PathSegmentCollection { new LineSegment(end) }
+                    }
+                });
+    }
 }

@@ -28,6 +28,6 @@ public partial class MainPage : ContentPage
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         var radiobutton = (RadioButton)sender;
-        App.ConditionsViewModel.CreatedElement = (CreatedElements)radiobutton.Value;
+        App.ConditionsViewModel.IsEditingMode = radiobutton.IsChecked;
     }
 }
