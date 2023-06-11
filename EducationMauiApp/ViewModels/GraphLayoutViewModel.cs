@@ -19,7 +19,10 @@ namespace EducationMauiApp.ViewModels
 		public ObservableCollection<GraphViewElement> GraphElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 
 
-		private ICommand addNodeCommand;
+
+        #region Команды
+
+        private ICommand addNodeCommand;
 		public ICommand AddNodeCommand => addNodeCommand ??= new Command(f =>
 		{
 			if (f is not Point || !App.ConditionsViewModel.IsEditingMode) return;
@@ -69,7 +72,31 @@ namespace EducationMauiApp.ViewModels
 		});
 
 
-        private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
+		private ICommand setStartEdgeCommand;
+		public ICommand SetStartEdgeCommand => setStartEdgeCommand ??= new Command(f =>
+		{
+
+		});
+
+
+		private ICommand setEndEdgeCommand;
+		public ICommand SetEndEdgeCommand => setEndEdgeCommand ??= new Command(f =>
+		{
+
+		});
+
+
+		private ICommand removeNodeCommand;
+		public ICommand RemoveNodeCommand => removeNodeCommand ??= new Command(f =>
+		{
+
+		});
+
+
+		#endregion
+		#region Вспомогательные методы
+
+		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
 		private Geometry CreatedDefaultLine(Point start, Point end) 
 			=> new PathGeometry(
 				new PathFigureCollection
@@ -80,5 +107,6 @@ namespace EducationMauiApp.ViewModels
                         Segments = new PathSegmentCollection { new LineSegment(end) }
                     }
                 });
+        #endregion
     }
 }

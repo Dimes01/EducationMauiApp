@@ -16,11 +16,12 @@
 				Content="Редактирование" TextColor="{StaticResource White}"
                 GroupName="SelectedCreatedElements"
                 CheckedChanged="RadioButton_CheckedChanged"
+                IsChecked="True"
 				Margin="3"/>
         </FlexLayout>
         <AbsoluteLayout 
 			Grid.Row="{OnPlatform WinUI=1, Android=0}"
-			Background="Transparent"
+			Background="{StaticResource PrimaryBrush}"
 			BindableLayout.ItemsSource="{Binding 
 				Source={StaticResource GraphLayoutViewModel}, 
 				Path=GraphElements, 
@@ -38,11 +39,26 @@
                         <elem:GraphViewElement.GestureRecognizers>
                             <TapGestureRecognizer Tapped="GraphElement_Tapped"/>
                         </elem:GraphViewElement.GestureRecognizers>
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout
+                                BindingContext="{StaticResource GraphLayoutViewModel}">
+                                <MenuFlyoutItem
+                                    Text="Начало ребра"
+                                    Command="{Binding SetStartEdgeCommand}"/>
+                                <MenuFlyoutItem
+                                    Text="Конец ребра"
+                                    Command="{Binding SetEndEdgeCommand}"/>
+                                <MenuFlyoutItem
+                                    Text="Удалить узел"
+                                    Command="{Binding RemoveNodeCommand}"/>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
                     </elem:GraphViewElement>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
             <AbsoluteLayout.GestureRecognizers>
                 <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+                <PinchGestureRecognizer PinchUpdated="PinchGestureRecognizer_PinchUpdated"/>
             </AbsoluteLayout.GestureRecognizers>
         </AbsoluteLayout>
     </Grid>

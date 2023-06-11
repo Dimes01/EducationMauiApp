@@ -30,4 +30,10 @@ public partial class MainPage : ContentPage
         var radiobutton = (RadioButton)sender;
         App.ConditionsViewModel.IsEditingMode = radiobutton.IsChecked;
     }
+
+    private void PinchGestureRecognizer_PinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+    {
+        //var layout = (AbsoluteLayout)sender;
+        //layout.ScaleTo(e.Scale);
+    }
 }
