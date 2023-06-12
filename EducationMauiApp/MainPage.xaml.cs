@@ -36,4 +36,16 @@ public partial class MainPage : ContentPage
         //var layout = (AbsoluteLayout)sender;
         //layout.ScaleTo(e.Scale);
     }
+
+    private void MenuFlyoutItem_Clicked(object sender, EventArgs e)
+    {
+        if (sender is not MenuFlyoutItem) return;
+        var menu = (MenuFlyoutItem)sender;
+        var context = (GraphLayoutViewModel)menu.BindingContext;
+        if (context == null) return;
+        if (menu.Text == "Начало ребра") context.SetStartEdgeCommand.Execute(sender);
+        else if (menu.Text == "Конец ребра") context.SetEndEdgeCommand.Execute(sender);
+        else if (menu.Text == "Удалить узел") context.RemoveNodeCommand.Execute(sender);
+        else DisplayAlert("Контекстное меню", "Отсутствие команды для пункта", "Закрыть");
+    }
 }

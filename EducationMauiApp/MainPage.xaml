@@ -44,7 +44,7 @@
                                 BindingContext="{StaticResource GraphLayoutViewModel}">
                                 <MenuFlyoutItem
                                     Text="Начало ребра"
-                                    Command="{Binding SetStartEdgeCommand}"/>
+                                    Clicked="MenuFlyoutItem_Clicked"/>
                                 <MenuFlyoutItem
                                     Text="Конец ребра"
                                     Command="{Binding SetEndEdgeCommand}"/>
