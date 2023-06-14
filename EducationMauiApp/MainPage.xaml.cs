@@ -13,8 +13,7 @@ public partial class MainPage : ContentPage
     private void GraphLayout_Tapped(object sender, TappedEventArgs e)
     {
         var position = (Point)e.GetPosition((View)sender);
-        if (App.GraphLayoutViewModel.AddNodeCommand.CanExecute(null))
-            App.GraphLayoutViewModel.AddNodeCommand.Execute(position);
+        App.GraphLayoutViewModel.AddNodeCommand.Execute(position);
     }
 
     private void GraphElement_Primary_Tapped(object sender, TappedEventArgs e)
@@ -35,18 +34,6 @@ public partial class MainPage : ContentPage
         var element = sender as GraphViewElement;
         if (element.GraphElement is not Node) return;
         App.GraphLayoutViewModel.WorkingNode = element;
-    }
-
-    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        var radiobutton = (RadioButton)sender;
-        App.ConditionsViewModel.IsEditingMode = radiobutton.IsChecked;
-    }
-
-    private void PinchGestureRecognizer_PinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
-    {
-        //var layout = (AbsoluteLayout)sender;
-        //layout.ScaleTo(e.Scale);
     }
 
     private void MenuFlyoutItem_Clicked(object sender, EventArgs e)

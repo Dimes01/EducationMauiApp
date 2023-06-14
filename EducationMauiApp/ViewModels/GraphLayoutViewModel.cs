@@ -42,7 +42,7 @@ namespace EducationMauiApp.ViewModels
         private ICommand addNodeCommand;
 		public ICommand AddNodeCommand => addNodeCommand ??= new Command(f =>
 		{
-			if (f is not Point || !App.ConditionsViewModel.IsEditingMode) return;
+			if (f is not Point) return;
 			var position = (Point)f;
             var node = new Node(position);
             var viewNode = new GraphViewElement
@@ -53,7 +53,7 @@ namespace EducationMauiApp.ViewModels
                 Margin = new Thickness(position.X - radiusNode, position.Y - radiusNode, 0, 0)
             };
             GraphElements.Add(viewNode);
-        }, f => App.ConditionsViewModel.IsEditingMode);
+        });
 
 
 		private ICommand addEdgeCommand;
@@ -123,7 +123,13 @@ namespace EducationMauiApp.ViewModels
                 GraphElements.Remove(removeEdges[i]);
                 removeEdges[i].GraphElement.Remove();
             }
-            GraphElements.Remove(WorkingNode);
+            for (int i = 0; i < GraphElements.Count; ++i)
+            {
+                if (GraphElements[i].GraphElement != WorkingNode.GraphElement) continue;
+                GraphElements.RemoveAt(i);
+                break;
+            }
+            //GraphElements.Remove(WorkingNode);
             WorkingNode.GraphElement.Remove();
             WorkingNode = null;
         });

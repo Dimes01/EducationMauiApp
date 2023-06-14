@@ -12,7 +12,6 @@
             </ResourceDictionary.MergedDictionaries>
             
             <vm:GraphLayoutViewModel x:Key="GraphLayoutViewModel"/>
-            <vm:ConditionsViewModel x:Key="ConditionsViewModel"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -5,7 +5,6 @@ namespace EducationMauiApp;
 public partial class App : Application
 {
 	internal static GraphLayoutViewModel GraphLayoutViewModel { get; private set; }
-    internal static ConditionsViewModel ConditionsViewModel { get; private set; }
     public App()
 	{
 		InitializeComponent();
@@ -15,7 +14,6 @@ public partial class App : Application
         //		System.TypeInitializationException: 'The type initializer for 'EducationMauiApp.App' threw an exception.',
         //	связанная со статическим конструктором.
         GraphLayoutViewModel = (GraphLayoutViewModel)Current.Resources[nameof(GraphLayoutViewModel)];
-        ConditionsViewModel = (ConditionsViewModel)Current.Resources[nameof(ConditionsViewModel)];
 
         MainPage = new AppShell();
     }

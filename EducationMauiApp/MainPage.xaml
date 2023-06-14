@@ -9,16 +9,6 @@
             <RowDefinition Height="{OnPlatform WinUI=auto}"/>
             <RowDefinition Height="{OnPlatform Android=auto}"/>
         </Grid.RowDefinitions>
-        <FlexLayout
-			Grid.Row="{OnPlatform WinUI=0, Android=1}"
-			BackgroundColor="{StaticResource Secondary}">
-            <RadioButton 
-				Content="Редактирование" TextColor="{StaticResource White}"
-                GroupName="SelectedCreatedElements"
-                CheckedChanged="RadioButton_CheckedChanged"
-                IsChecked="True"
-				Margin="3"/>
-        </FlexLayout>
         <AbsoluteLayout 
 			Grid.Row="{OnPlatform WinUI=1, Android=0}"
 			Background="{StaticResource PrimaryBrush}"
@@ -63,7 +53,6 @@
             </BindableLayout.ItemTemplate>
             <AbsoluteLayout.GestureRecognizers>
                 <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-                <PinchGestureRecognizer PinchUpdated="PinchGestureRecognizer_PinchUpdated"/>
             </AbsoluteLayout.GestureRecognizers>
         </AbsoluteLayout>
     </Grid>
