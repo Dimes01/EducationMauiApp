@@ -37,7 +37,12 @@
                         Margin="{Binding Margin, Mode=OneWay}"
                         ZIndex="{Binding ZIndex, Mode=OneWay}">
                         <elem:GraphViewElement.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="GraphElement_Tapped"/>
+                            <TapGestureRecognizer 
+                                Tapped="GraphElement_Primary_Tapped"
+                                Buttons="Primary"/>
+                            <TapGestureRecognizer 
+                                Tapped="GraphElement_Secondary_Tapped"
+                                Buttons="Secondary"/>
                         </elem:GraphViewElement.GestureRecognizers>
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout

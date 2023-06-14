@@ -17,12 +17,24 @@ public partial class MainPage : ContentPage
             App.GraphLayoutViewModel.AddNodeCommand.Execute(position);
     }
 
-    private void GraphElement_Tapped(object sender, TappedEventArgs e)
+    private void GraphElement_Primary_Tapped(object sender, TappedEventArgs e)
     {
-        var element = ((GraphViewElement)sender).GraphElement as Node;
-        if (element == null) return;
-        if (App.GraphLayoutViewModel.AddEdgeCommand.CanExecute(null))
-            App.GraphLayoutViewModel.AddEdgeCommand.Execute(element);
+        var element = ((GraphViewElement)sender).GraphElement;
+        if (element is null) return;
+        else if (element is Edge)
+        {
+            App.GraphLayoutViewModel.AddNodeCommand.Execute((Point)e.GetPosition((View)(sender as GraphViewElement).Parent));
+            return;
+        }
+        App.GraphLayoutViewModel.AddEdgeCommand.Execute(element as Node);
+    }
+
+    private void GraphElement_Secondary_Tapped(object sender, TappedEventArgs e)
+    {
+        if (sender is not GraphViewElement) return;
+        var element = sender as GraphViewElement;
+        if (element.GraphElement is not Node) return;
+        App.GraphLayoutViewModel.WorkingNode = element;
     }
 
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -41,11 +53,10 @@ public partial class MainPage : ContentPage
     {
         if (sender is not MenuFlyoutItem) return;
         var menu = (MenuFlyoutItem)sender;
-        var context = (GraphLayoutViewModel)menu.BindingContext;
-        if (context == null) return;
-        if (menu.Text == "Начало ребра") context.SetStartEdgeCommand.Execute(sender);
-        else if (menu.Text == "Конец ребра") context.SetEndEdgeCommand.Execute(sender);
-        else if (menu.Text == "Удалить узел") context.RemoveNodeCommand.Execute(sender);
+        if (menu.Text == "Начало ребра") App.GraphLayoutViewModel.SetStartEdgeCommand.Execute(null);
+        else if (menu.Text == "Конец ребра") App.GraphLayoutViewModel.SetEndEdgeCommand.Execute(null);
+        else if (menu.Text == "Удалить узел") App.GraphLayoutViewModel.RemoveNodeCommand.Execute(null);
         else DisplayAlert("Контекстное меню", "Отсутствие команды для пункта", "Закрыть");
     }
+
 }

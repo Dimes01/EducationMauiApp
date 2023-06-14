@@ -17,9 +17,25 @@ namespace EducationMauiApp.ViewModels
 
 		private const double radiusNode = 10;
 		private Edge tempEdge = new();
-		public ObservableCollection<GraphViewElement> GraphElements { get; private set; } = new ObservableCollection<GraphViewElement>();
+
+        #region Свойства
+
+        public ObservableCollection<GraphViewElement> GraphElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 
 
+        private GraphViewElement workingNode;
+        public GraphViewElement WorkingNode
+        {
+            get => workingNode;
+            set
+            {
+                if (workingNode == value) return;
+                workingNode = value;
+                OnPropertyChanged(nameof(WorkingNode));
+            }
+        }
+
+        #endregion
 
         #region Команды
 
@@ -66,9 +82,8 @@ namespace EducationMauiApp.ViewModels
                 Geometry = CreatedDefaultLine(pointStart, pointEnd),
                 GraphElement = tempEdge,
                 ZIndex = 45,
-                Margin = new Thickness(minOfCoordinates.X, minOfCoordinates.Y, 0, 0)
+                Margin = new Thickness(minOfCoordinates.X, minOfCoordinates.Y, 0, 0),
             };
-
             GraphElements.Add(viewEdge);
             tempEdge = new();
         });
@@ -77,8 +92,8 @@ namespace EducationMauiApp.ViewModels
 		private ICommand setStartEdgeCommand;
 		public ICommand SetStartEdgeCommand => setStartEdgeCommand ??= new Command(f =>
 		{
-            if (f is not Node) return;
-            tempEdge.Nodes[0] = (Node)f;
+            if (WorkingNode is null) return;
+            tempEdge.Nodes[0] = (Node)WorkingNode.GraphElement;
             if (tempEdge.Nodes[0] != null && tempEdge.Nodes[1] != null) AddEdgeCommand.Execute(null);
         });
 
@@ -86,8 +101,8 @@ namespace EducationMauiApp.ViewModels
 		private ICommand setEndEdgeCommand;
 		public ICommand SetEndEdgeCommand => setEndEdgeCommand ??= new Command(f =>
 		{
-            if (f is not Node) return;
-            tempEdge.Nodes[1] = (Node)f;
+            if (WorkingNode is null) return;
+            tempEdge.Nodes[1] = (Node)WorkingNode.GraphElement;
             if (tempEdge.Nodes[0] != null && tempEdge.Nodes[1] != null) AddEdgeCommand.Execute(null);
         });
 
@@ -95,11 +110,27 @@ namespace EducationMauiApp.ViewModels
 		private ICommand removeNodeCommand;
 		public ICommand RemoveNodeCommand => removeNodeCommand ??= new Command(f =>
 		{
-            
-		});
+            List<GraphViewElement> removeEdges = new();
+            for (int i = 0; i < GraphElements.Count; ++i)
+            {
+                if (GraphElements[i].GraphElement is not Edge) continue;
+                var edge = GraphElements[i].GraphElement as Edge;
+                if (edge.Nodes[0] == WorkingNode.GraphElement || edge.Nodes[1] == WorkingNode.GraphElement)
+                    removeEdges.Add(GraphElements[i]);
+            }
+            for (int i = 0; i < removeEdges.Count; ++i)
+            {
+                GraphElements.Remove(removeEdges[i]);
+                removeEdges[i].GraphElement.Remove();
+            }
+            GraphElements.Remove(WorkingNode);
+            WorkingNode.GraphElement.Remove();
+            WorkingNode = null;
+        });
 
 
 		#endregion
+
 		#region Вспомогательные методы
 
 		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
@@ -111,18 +142,12 @@ namespace EducationMauiApp.ViewModels
                 {
                     new PathFigure
                     {
-                        StartPoint = new Point(0, 0),
-                        Segments = new PathSegmentCollection { new LineSegment(new Point(length, 0)) }
+                        StartPoint = start,
+                        Segments = new PathSegmentCollection { new LineSegment(end) }
                     }
                 });
         }
-        private double AngleBetweenPoints(Point first, Point second)
-        {
-            var vector1 = new Vector2((float)first.X, (float)first.Y);
-            var vector2 = new Vector2((float)second.X, (float)second.Y);
-            var dot = Vector2.Dot(vector1, vector2);
-            return Math.Acos(dot) * Math.PI / 180;
-        }
+
         #endregion
     }
 }
