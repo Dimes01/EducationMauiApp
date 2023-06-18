@@ -2,58 +2,64 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
-             xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
+			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{OnPlatform WinUI=auto}"/>
-            <RowDefinition Height="{OnPlatform Android=auto}"/>
-        </Grid.RowDefinitions>
-        <AbsoluteLayout 
-			Grid.Row="{OnPlatform WinUI=1, Android=0}"
+	<Grid>
+        <StackLayout
+            BindingContext="{StaticResource GraphLayoutViewModel}"
+            HorizontalOptions="End"
+            VerticalOptions="Center"
+            ZIndex="100">
+            <Button 
+                Text="+">
+            </Button>
+            <Button 
+                Text="-"/>
+        </StackLayout>
+		<AbsoluteLayout 
 			Background="{StaticResource PrimaryBrush}"
 			BindableLayout.ItemsSource="{Binding 
 				Source={StaticResource GraphLayoutViewModel}, 
 				Path=GraphElements, 
 				Mode=OneWay}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <elem:GraphViewElement 
-                        Fill="{Binding Fill, Mode=OneWay}"
-                        Stroke="{Binding Stroke, Mode=OneWay}"
-                        StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-                        Geometry="{Binding Geometry, Mode=OneWay}"
-                        GraphElement="{Binding GraphElement, Mode=OneWay}"
-                        Margin="{Binding Margin, Mode=OneWay}"
-                        ZIndex="{Binding ZIndex, Mode=OneWay}">
-                        <elem:GraphViewElement.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                Tapped="GraphElement_Primary_Tapped"
-                                Buttons="Primary"/>
-                            <TapGestureRecognizer 
-                                Tapped="GraphElement_Secondary_Tapped"
-                                Buttons="Secondary"/>
-                        </elem:GraphViewElement.GestureRecognizers>
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout
-                                BindingContext="{StaticResource GraphLayoutViewModel}">
-                                <MenuFlyoutItem
-                                    Text="Начало ребра"
+			<BindableLayout.ItemTemplate>
+				<DataTemplate>
+					<elem:GraphViewElement 
+						Fill="{Binding Fill, Mode=OneWay}"
+						Stroke="{Binding Stroke, Mode=OneWay}"
+						StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+						Geometry="{Binding Geometry, Mode=OneWay}"
+						GraphElement="{Binding GraphElement, Mode=OneWay}"
+						Margin="{Binding Margin, Mode=OneWay}"
+						ZIndex="{Binding ZIndex, Mode=OneWay}">
+						<elem:GraphViewElement.GestureRecognizers>
+							<TapGestureRecognizer 
+								Tapped="GraphElement_Primary_Tapped"
+								Buttons="Primary"/>
+							<TapGestureRecognizer 
+								Tapped="GraphElement_Secondary_Tapped"
+								Buttons="Secondary"/>
+						</elem:GraphViewElement.GestureRecognizers>
+						<FlyoutBase.ContextFlyout>
+							<MenuFlyout
+								BindingContext="{StaticResource GraphLayoutViewModel}">
+								<MenuFlyoutItem
+									Text="Начало ребра"
+									Clicked="MenuFlyoutItem_Clicked"/>
+								<MenuFlyoutItem
+									Text="Конец ребра"
                                     Clicked="MenuFlyoutItem_Clicked"/>
-                                <MenuFlyoutItem
-                                    Text="Конец ребра"
-                                    Command="{Binding SetEndEdgeCommand}"/>
-                                <MenuFlyoutItem
-                                    Text="Удалить узел"
-                                    Command="{Binding RemoveNodeCommand}"/>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-                    </elem:GraphViewElement>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-            <AbsoluteLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+								<MenuFlyoutItem
+									Text="Удалить узел"
+                                    Clicked="MenuFlyoutItem_Clicked"/>
+							</MenuFlyout>
+						</FlyoutBase.ContextFlyout>
+					</elem:GraphViewElement>
+				</DataTemplate>
+			</BindableLayout.ItemTemplate>
+			<AbsoluteLayout.GestureRecognizers>
+				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
             </AbsoluteLayout.GestureRecognizers>
-        </AbsoluteLayout>
-    </Grid>
+		</AbsoluteLayout>
+	</Grid>
 </ContentPage>

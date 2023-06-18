@@ -45,5 +45,4 @@ public partial class MainPage : ContentPage
         else if (menu.Text == "Удалить узел") App.GraphLayoutViewModel.RemoveNodeCommand.Execute(null);
         else DisplayAlert("Контекстное меню", "Отсутствие команды для пункта", "Закрыть");
     }
-
 }
