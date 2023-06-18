@@ -42,18 +42,10 @@
 	<SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
 	<SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
 	<SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
-	
-	
-	<Color x:Key="Yellow100Accent">#F7B548</Color>
-	<Color x:Key="Yellow200Accent">#FFD590</Color>
-	<Color x:Key="Yellow300Accent">#FFE5B9</Color>
-	<Color x:Key="Cyan100Accent">#28C2D1</Color>
-	<Color x:Key="Cyan200Accent">#7BDDEF</Color>
-	<Color x:Key="Cyan300Accent">#C3F2F4</Color>
-	<Color x:Key="Blue100Accent">#163172</Color>
-	<Color x:Key="Blue200Accent">#1E56A0</Color>
-	<Color x:Key="Blue300Accent">#D6E4F0</Color>
-    
+
+
+    <Color x:Key="Yellow100Accent">#F7B548</Color>
+
     <SolidColorBrush x:Key="FillNodeBrush" Color="{StaticResource Yellow100Accent}"/>
     <SolidColorBrush x:Key="StrokeNodeBrush" Color="{StaticResource Green600}"/>
     <SolidColorBrush x:Key="SelectStrokeNodeBrush" Color="{StaticResource Yellow100Accent}"/>

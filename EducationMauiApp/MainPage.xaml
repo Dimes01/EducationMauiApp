@@ -11,12 +11,14 @@
             VerticalOptions="Center"
             ZIndex="100">
             <Button 
-                Text="+">
+                Text="+"
+                Command="{Binding }">
             </Button>
             <Button 
                 Text="-"/>
         </StackLayout>
 		<AbsoluteLayout 
+            x:Name="GrpahLayout"
 			Background="{StaticResource PrimaryBrush}"
 			BindableLayout.ItemsSource="{Binding 
 				Source={StaticResource GraphLayoutViewModel}, 

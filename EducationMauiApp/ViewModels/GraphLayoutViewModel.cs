@@ -135,11 +135,21 @@ namespace EducationMauiApp.ViewModels
         });
 
 
-		#endregion
+        private ICommand scaleUpCommand;
+        public ICommand ScaleUpCommand => scaleUpCommand ??= new Command(layout =>
+        {
+            if (layout is not AbsoluteLayout) return;
+            var panel = layout as AbsoluteLayout;
+            panel.ScaleTo(panel.Scale + 0.1);
+        });
 
-		#region Вспомогательные методы
 
-		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
+
+        #endregion
+
+        #region Вспомогательные методы
+
+        private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
         private Geometry CreatedDefaultLine(Point start, Point end)
         {
             var length = start.Distance(end);
