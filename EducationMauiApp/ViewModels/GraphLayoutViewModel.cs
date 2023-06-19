@@ -1,9 +1,9 @@
-﻿using EducationMauiApp.UIElements;
+﻿using EducationMauiApp.Models;
+using EducationMauiApp.UIElements;
 using GraphLib.Models;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -50,7 +50,7 @@ namespace EducationMauiApp.ViewModels
 			{
 				Geometry = CreatedDefaultEllipse(new Point(radiusNode, radiusNode)),
 				GraphElement = node,
-				ZIndex = 50,
+				ZIndex = ZIndexes.Node,
 				Margin = new Thickness(node.Position.X - radiusNode, node.Position.Y - radiusNode, 0, 0)
 			};
 			GraphViewElements.Add(viewNode);
@@ -69,6 +69,8 @@ namespace EducationMauiApp.ViewModels
 			else if (f is not null) return;
 
 			if (tempEdge.Nodes[0] == null || tempEdge.Nodes[1] == null) return;
+			tempEdge.Nodes[0].Neighbors.Add(tempEdge.Nodes[1]);
+			if (!tempEdge.Oriented) tempEdge.Nodes[1].Neighbors.Add(tempEdge.Nodes[0]);
 			SetEdgeToElements(tempEdge);			
 			tempEdge = new();
 		});
@@ -108,7 +110,16 @@ namespace EducationMauiApp.ViewModels
 				GraphViewElements.Remove(removeEdges[i]);
 				removeEdges[i].GraphElement.Remove();
 			}
-			GraphViewElements.Remove(WorkingNode);
+
+			// Костыль
+			for (int i = 0; i < GraphViewElements.Count; ++i)
+			{
+				if (GraphViewElements[i].GraphElement is not Node) continue;
+				if (GraphViewElements[i].GraphElement != WorkingNode.GraphElement) continue;
+				GraphViewElements.RemoveAt(i);
+				break;
+			}
+			//GraphViewElements.Remove(WorkingNode);  // не работает
 			WorkingNode.GraphElement.Remove();
 			WorkingNode = null;
 		});
@@ -127,11 +138,11 @@ namespace EducationMauiApp.ViewModels
 		private ICommand removeFromRouteCommand;
 		public ICommand RemoveFromRouteCommand => removeFromRouteCommand ??= new Command(f =>
 		{
-            if (f is not GraphViewElement) return;
-            var element = ((GraphViewElement)f).GraphElement;
-            if (element is not Node) return;
-            nodesForRoute.Remove(element as Node);
-        });
+			if (f is not GraphViewElement) return;
+			var element = ((GraphViewElement)f).GraphElement;
+			if (element is not Node) return;
+			nodesForRoute.Remove(element as Node);
+		});
 
 
 		private ICommand makeRouteCommand;
@@ -140,34 +151,32 @@ namespace EducationMauiApp.ViewModels
 			if (elementsOfRoute.Count > 0) RemoveRouteCommand.Execute(null);
 			GraphViewElement element;
 			var listRoutes = new List<Node>();
-            for (int i = 0; i < nodesForRoute.Count - 1; ++i)
-            {
+			for (int i = 0; i < nodesForRoute.Count - 1; ++i)
+			{
 				listRoutes = Route.GetRoute(nodesForRoute[i], nodesForRoute[i + 1]);
-                for (int j = 0; j < listRoutes.Count - 1; ++j)
-                {
+				for (int j = 0; j < listRoutes.Count - 1; ++j)
+				{
 					SetNodeOfRouteToElements(listRoutes[j]);
 					SetEdgeToElements(new Edge(listRoutes[j], listRoutes[j + 1]));
 					element = GraphViewElements.Last();
-                    elementsOfRoute.Add(element);
-                    element.Stroke = Brush.Green;
-                    element.StrokeThickness = 4;
-                }
-            }
+					elementsOfRoute.Add(element);
+					element.ZIndex = ZIndexes.RouteEdge;
+					element.Stroke = Brush.Green;
+					element.StrokeThickness = 4;
+				}
+			}
 			SetNodeOfRouteToElements(nodesForRoute.Last());
-        });
+		});
 
 
 		private ICommand removeRouteCommand;
 		public ICommand RemoveRouteCommand => removeRouteCommand ??= new Command(f =>
 		{
-            for (int i = 0; i < elementsOfRoute.Count; ++i)
-            {
+			for (int i = 0; i < elementsOfRoute.Count; ++i) 
 				GraphViewElements.Remove(elementsOfRoute[i]);
-				elementsOfRoute[i].GraphElement.Remove();
-            }
 			elementsOfRoute.Clear();
 			nodesForRoute.Clear();
-        });
+		});
 
 
 
@@ -190,29 +199,31 @@ namespace EducationMauiApp.ViewModels
 		}
 		private void SetNodeOfRouteToElements(Node node)
 		{
-            AddNodeCommand.Execute(node);
-            GraphViewElements.Last().Fill = Brush.Red;
-            elementsOfRoute.Add(GraphViewElements.Last());
-        }
+			AddNodeCommand.Execute(node);
+			var element = GraphViewElements.Last();
+			element.Fill = Brush.Red;
+			element.ZIndex = ZIndexes.RouteNode;
+			elementsOfRoute.Add(GraphViewElements.Last());
+		}
 		private void SetEdgeToElements(Edge edge)
 		{
-            var minOfCoordinates = new Point();
-            if (edge.Nodes[0].Position.X < edge.Nodes[1].Position.X) minOfCoordinates.X = edge.Nodes[0].Position.X;
-            else minOfCoordinates.X = edge.Nodes[1].Position.X;
-            if (edge.Nodes[0].Position.Y < edge.Nodes[1].Position.Y) minOfCoordinates.Y = edge.Nodes[0].Position.Y;
-            else minOfCoordinates.Y = edge.Nodes[1].Position.Y;
+			var minOfCoordinates = new Point();
+			if (edge.Nodes[0].Position.X < edge.Nodes[1].Position.X) minOfCoordinates.X = edge.Nodes[0].Position.X;
+			else minOfCoordinates.X = edge.Nodes[1].Position.X;
+			if (edge.Nodes[0].Position.Y < edge.Nodes[1].Position.Y) minOfCoordinates.Y = edge.Nodes[0].Position.Y;
+			else minOfCoordinates.Y = edge.Nodes[1].Position.Y;
 
-            var pointStart = new Point(edge.Nodes[0].Position.X - minOfCoordinates.X, edge.Nodes[0].Position.Y - minOfCoordinates.Y);
-            var pointEnd = new Point(edge.Nodes[1].Position.X - minOfCoordinates.X, edge.Nodes[1].Position.Y - minOfCoordinates.Y);
-            var viewEdge = new GraphViewElement
-            {
-                Geometry = CreatedDefaultLine(pointStart, pointEnd),
-                GraphElement = edge,
-                ZIndex = 45,
-                Margin = new Thickness(minOfCoordinates.X, minOfCoordinates.Y, 0, 0),
-            };
-            GraphViewElements.Add(viewEdge);
-        }
+			var pointStart = new Point(edge.Nodes[0].Position.X - minOfCoordinates.X, edge.Nodes[0].Position.Y - minOfCoordinates.Y);
+			var pointEnd = new Point(edge.Nodes[1].Position.X - minOfCoordinates.X, edge.Nodes[1].Position.Y - minOfCoordinates.Y);
+			var viewEdge = new GraphViewElement
+			{
+				Geometry = CreatedDefaultLine(pointStart, pointEnd),
+				GraphElement = edge,
+				ZIndex = ZIndexes.Edge,
+				Margin = new Thickness(minOfCoordinates.X, minOfCoordinates.Y, 0, 0),
+			};
+			GraphViewElements.Add(viewEdge);
+		}
 
 		#endregion
 	}

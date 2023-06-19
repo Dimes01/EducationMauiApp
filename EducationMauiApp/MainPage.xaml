@@ -8,7 +8,7 @@
 		Background="{StaticResource PrimaryBrush}"
 		BindableLayout.ItemsSource="{Binding 
 			Source={StaticResource GraphLayoutViewModel}, 
-			Path=GraphElements, 
+			Path=GraphViewElements, 
 			Mode=OneWay}">
         <BindableLayout.ItemTemplate>
             <DataTemplate>
