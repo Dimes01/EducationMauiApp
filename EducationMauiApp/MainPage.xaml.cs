@@ -12,8 +12,8 @@ public partial class MainPage : ContentPage
 	}
     private void GraphLayout_Tapped(object sender, TappedEventArgs e)
     {
-        var position = (Point)e.GetPosition((View)sender);
-        App.GraphLayoutViewModel.AddNodeCommand.Execute(position);
+        var node = new Node((Point)e.GetPosition((View)sender));
+        App.GraphLayoutViewModel.AddNodeCommand.Execute(node);
     }
 
     private void GraphElement_Primary_Tapped(object sender, TappedEventArgs e)
@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
         if (element is null) return;
         else if (element is Edge)
         {
-            App.GraphLayoutViewModel.AddNodeCommand.Execute((Point)e.GetPosition((View)(sender as GraphViewElement).Parent));
+            App.GraphLayoutViewModel.AddNodeCommand.Execute(new Node((Point)e.GetPosition((View)(sender as GraphViewElement).Parent)));
             return;
         }
         App.GraphLayoutViewModel.AddEdgeCommand.Execute(element as Node);
@@ -34,15 +34,5 @@ public partial class MainPage : ContentPage
         var element = sender as GraphViewElement;
         if (element.GraphElement is not Node) return;
         App.GraphLayoutViewModel.WorkingNode = element;
-    }
-
-    private void MenuFlyoutItem_Clicked(object sender, EventArgs e)
-    {
-        if (sender is not MenuFlyoutItem) return;
-        var menu = (MenuFlyoutItem)sender;
-        if (menu.Text == "Начало ребра") App.GraphLayoutViewModel.SetStartEdgeCommand.Execute(null);
-        else if (menu.Text == "Конец ребра") App.GraphLayoutViewModel.SetEndEdgeCommand.Execute(null);
-        else if (menu.Text == "Удалить узел") App.GraphLayoutViewModel.RemoveNodeCommand.Execute(null);
-        else DisplayAlert("Контекстное меню", "Отсутствие команды для пункта", "Закрыть");
     }
 }
