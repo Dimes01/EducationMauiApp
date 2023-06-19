@@ -1,4 +1,5 @@
-﻿using EducationMauiApp.ViewModels;
+﻿using EducationMauiApp.Pages;
+using EducationMauiApp.ViewModels;
 
 namespace EducationMauiApp;
 

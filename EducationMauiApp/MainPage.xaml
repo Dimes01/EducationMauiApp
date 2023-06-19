@@ -5,63 +5,123 @@
 			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
 	<Grid>
-        <StackLayout
-            BindingContext="{StaticResource GraphLayoutViewModel}"
-            HorizontalOptions="End"
-            VerticalOptions="Center"
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="{OnPlatform WinUI=Auto, Android=0}"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+        
+		<StackLayout
+			BindingContext="{StaticResource GraphLayoutViewModel}"
+			HorizontalOptions="End"
+			VerticalOptions="Center"
+			ZIndex="100">
+			<Button 
+				Text="+"
+				Style="{StaticResource ScaleButtons}"
+				Command="{Binding ScaleUpCommand, Mode=OneWay}"
+				CommandParameter="{x:Reference GrpahLayout}">
+			</Button>
+			<Button 
+				Text="-"
+				Style="{StaticResource ScaleButtons}"
+				Command="{Binding ScaleDownCommand, Mode=OneWay}"
+				CommandParameter="{x:Reference GrpahLayout}"/>
+		</StackLayout>
+		
+		<Grid
+			Background="{StaticResource WhiteBrush}"
+            IsClippedToBounds="True">
+			<AbsoluteLayout 
+				x:Name="GrpahLayout"
+				Background="{StaticResource PrimaryBrush}"
+				BindableLayout.ItemsSource="{Binding 
+					Source={StaticResource GraphLayoutViewModel}, 
+					Path=GraphElements, 
+					Mode=OneWay}"
+				HeightRequest="500"
+				WidthRequest="500"
+				IsClippedToBounds="True">
+				<BindableLayout.ItemTemplate>
+					<DataTemplate>
+						<elem:GraphViewElement 
+							Fill="{Binding Fill, Mode=OneWay}"
+							Stroke="{Binding Stroke, Mode=OneWay}"
+							StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+							Geometry="{Binding Geometry, Mode=OneWay}"
+							GraphElement="{Binding GraphElement, Mode=OneWay}"
+							Margin="{Binding Margin, Mode=OneWay}"
+							ZIndex="{Binding ZIndex, Mode=OneWay}">
+							<elem:GraphViewElement.GestureRecognizers>
+								<TapGestureRecognizer 
+									Tapped="GraphElement_Primary_Tapped"
+									Buttons="Primary"/>
+								<TapGestureRecognizer 
+									Tapped="GraphElement_Secondary_Tapped"
+									Buttons="Secondary"/>
+							</elem:GraphViewElement.GestureRecognizers>
+							<FlyoutBase.ContextFlyout>
+								<MenuFlyout
+									BindingContext="{StaticResource GraphLayoutViewModel}">
+									<MenuFlyoutItem
+										Text="Начало ребра"
+										Clicked="MenuFlyoutItem_Clicked"/>
+									<MenuFlyoutItem
+										Text="Конец ребра"
+										Clicked="MenuFlyoutItem_Clicked"/>
+									<MenuFlyoutItem
+										Text="Удалить узел"
+										Clicked="MenuFlyoutItem_Clicked"/>
+								</MenuFlyout>
+							</FlyoutBase.ContextFlyout>
+						</elem:GraphViewElement>
+					</DataTemplate>
+				</BindableLayout.ItemTemplate>
+				<AbsoluteLayout.GestureRecognizers>
+					<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+				</AbsoluteLayout.GestureRecognizers>
+			</AbsoluteLayout>
+		</Grid>
+		
+		<ScrollView
+			Grid.Column="1"
+			Background="{StaticResource SecondaryBrush}"
             ZIndex="100">
-            <Button 
-                Text="+"
-                Command="{Binding }">
-            </Button>
-            <Button 
-                Text="-"/>
-        </StackLayout>
-		<AbsoluteLayout 
-            x:Name="GrpahLayout"
-			Background="{StaticResource PrimaryBrush}"
-			BindableLayout.ItemsSource="{Binding 
-				Source={StaticResource GraphLayoutViewModel}, 
-				Path=GraphElements, 
-				Mode=OneWay}">
-			<BindableLayout.ItemTemplate>
-				<DataTemplate>
-					<elem:GraphViewElement 
-						Fill="{Binding Fill, Mode=OneWay}"
-						Stroke="{Binding Stroke, Mode=OneWay}"
-						StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-						Geometry="{Binding Geometry, Mode=OneWay}"
-						GraphElement="{Binding GraphElement, Mode=OneWay}"
-						Margin="{Binding Margin, Mode=OneWay}"
-						ZIndex="{Binding ZIndex, Mode=OneWay}">
-						<elem:GraphViewElement.GestureRecognizers>
-							<TapGestureRecognizer 
-								Tapped="GraphElement_Primary_Tapped"
-								Buttons="Primary"/>
-							<TapGestureRecognizer 
-								Tapped="GraphElement_Secondary_Tapped"
-								Buttons="Secondary"/>
-						</elem:GraphViewElement.GestureRecognizers>
-						<FlyoutBase.ContextFlyout>
-							<MenuFlyout
-								BindingContext="{StaticResource GraphLayoutViewModel}">
-								<MenuFlyoutItem
-									Text="Начало ребра"
-									Clicked="MenuFlyoutItem_Clicked"/>
-								<MenuFlyoutItem
-									Text="Конец ребра"
-                                    Clicked="MenuFlyoutItem_Clicked"/>
-								<MenuFlyoutItem
-									Text="Удалить узел"
-                                    Clicked="MenuFlyoutItem_Clicked"/>
-							</MenuFlyout>
-						</FlyoutBase.ContextFlyout>
-					</elem:GraphViewElement>
-				</DataTemplate>
-			</BindableLayout.ItemTemplate>
-			<AbsoluteLayout.GestureRecognizers>
-				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-            </AbsoluteLayout.GestureRecognizers>
-		</AbsoluteLayout>
+			<StackLayout>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<Label
+						Text="Ширина"
+						Grid.Row="0" Grid.Column="0"
+						Style="{StaticResource LabelInfoBar}"/>
+					<Entry
+						Text="{Binding 
+							Source={x:Reference GrpahLayout}, 
+							Path=WidthRequest, 
+							Mode=TwoWay}"
+						Grid.Row="0" Grid.Column="1"/>
+					<Label
+						Text="Высота"
+						Grid.Row="1" Grid.Column="0"
+						Style="{StaticResource LabelInfoBar}"/>
+					<Entry
+						Text="{Binding 
+							Source={x:Reference GrpahLayout}, 
+							Path=HeightRequest, 
+							Mode=TwoWay}"
+						Grid.Row="1" Grid.Column="1"/>
+				</Grid>
+			</StackLayout>
+		</ScrollView>
 	</Grid>
 </ContentPage>

@@ -144,6 +144,14 @@ namespace EducationMauiApp.ViewModels
         });
 
 
+        private ICommand scaleDownCommand;
+        public ICommand ScaleDownCommand => scaleDownCommand ??= new Command(layout =>
+        {
+            if (layout is not AbsoluteLayout) return;
+            var panel = layout as AbsoluteLayout;
+            panel.ScaleTo(panel.Scale - 0.1);
+        });
+
 
         #endregion
 

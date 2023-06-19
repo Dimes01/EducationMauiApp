@@ -8,9 +8,59 @@
         <Setter Property="Background" Value="{StaticResource Secondary}"/>
         <Setter Property="CornerRadius" Value="3"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
-            <Setter.Value>
-                
-            </Setter.Value>
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource Secondary}"/>
+                            <Setter Property="Scale" Value="1"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource Green600Brush}"/>
+                            <Setter Property="Scale" Value="0.8"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style x:Key="StartButtons" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter Property="Scale" Value="1"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="0.9"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource Tertiary}"/>
+                            <Setter Property="BorderWidth" Value="1"/>
+                            <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LabelInfoBar" TargetType="Label">
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="TextColor" Value="{StaticResource Tertiary}"/>
+        <Setter Property="Padding" Value="10,0"/>
     </Style>
 </ResourceDictionary>
