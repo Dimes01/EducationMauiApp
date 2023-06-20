@@ -4,69 +4,72 @@
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
 			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 x:Class="EducationMauiApp.MainPage">
-    <AbsoluteLayout 
-		Background="{StaticResource PrimaryBrush}"
-		BindableLayout.ItemsSource="{Binding 
-			Source={StaticResource GraphLayoutViewModel}, 
-			Path=GraphViewElements, 
-			Mode=TwoWay}">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <elem:GraphViewElement 
-					Fill="{Binding Fill, Mode=OneWay}"
-					Stroke="{Binding Stroke, Mode=OneWay}"
-					StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-					Geometry="{Binding Geometry, Mode=OneWay}"
-					GraphElement="{Binding GraphElement, Mode=OneWay}"
-					Margin="{Binding Margin, Mode=OneWay}"
-					ZIndex="{Binding ZIndex, Mode=OneWay}">
-                    <elem:GraphViewElement.GestureRecognizers>
-                        <TapGestureRecognizer 
-							Tapped="GraphElement_Primary_Tapped"
-							Buttons="Primary"/>
-                        <TapGestureRecognizer 
-							Tapped="GraphElement_Secondary_Tapped"
-							Buttons="Secondary"/>
-                    </elem:GraphViewElement.GestureRecognizers>
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout	BindingContext="{StaticResource GraphLayoutViewModel}">
-                            <MenuFlyoutItem
-								Text="Начало ребра"
-								Command="{Binding SetStartEdgeCommand}"
-                                CommandParameter="{Binding WorkingNode}"/>
-                            <MenuFlyoutItem
-								Text="Конец ребра"
-                                Command="{Binding SetEndEdgeCommand}"
-                                CommandParameter="{Binding WorkingNode}"/>
-                            <MenuFlyoutItem
-                                Text="Добавить в маршрут"
-                                Command="{Binding AddToEndOfRouteCommand}"
-                                CommandParameter="{Binding WorkingNode}"/>
-                            <MenuFlyoutItem
-                                Text="Удалить из маршрута"
-                                Command="{Binding RemoveFromRouteCommand}"
-                                CommandParameter="{Binding WorkingNode}"/>
-                            <MenuFlyoutItem
-								Text="Удалить узел"
-                                Command="{Binding RemoveNodeCommand}"
-                                CommandParameter="{Binding WorkingNode}"/>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
-                </elem:GraphViewElement>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
-        <AbsoluteLayout.GestureRecognizers>
-            <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-        </AbsoluteLayout.GestureRecognizers>
-        <FlyoutBase.ContextFlyout>
-            <MenuFlyout BindingContext="{StaticResource GraphLayoutViewModel}">
-                <MenuFlyoutItem
-                    Text="Построить маршрут"
-                    Command="{Binding MakeRouteCommand}"/>
-                <MenuFlyoutItem
-                    Text="Удалить маршрут"
-                    Command="{Binding RemoveRouteCommand}"/>
-            </MenuFlyout>
-        </FlyoutBase.ContextFlyout>
-    </AbsoluteLayout>
+    <Grid>
+        <AbsoluteLayout 
+		    Background="{StaticResource PrimaryBrush}"
+		    BindableLayout.ItemsSource="{Binding 
+			    Source={StaticResource GraphLayoutViewModel}, 
+			    Path=GraphViewElements, 
+			    Mode=OneWay}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <elem:GraphViewElement 
+					    Fill="{Binding Fill, Mode=OneWay}"
+					    Stroke="{Binding Stroke, Mode=OneWay}"
+					    StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+					    Geometry="{Binding Geometry, Mode=OneWay}"
+					    GraphElement="{Binding GraphElement, Mode=OneWay}"
+					    Margin="{Binding Margin, Mode=OneWay}"
+					    ZIndex="{Binding ZIndex, Mode=OneWay}">
+                        <elem:GraphViewElement.GestureRecognizers>
+                            <TapGestureRecognizer 
+							    Tapped="GraphElement_Primary_Tapped"
+							    Buttons="Primary"/>
+                            <TapGestureRecognizer 
+							    Tapped="GraphElement_Secondary_Tapped"
+							    Buttons="Secondary"/>
+                        </elem:GraphViewElement.GestureRecognizers>
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout	BindingContext="{StaticResource GraphLayoutViewModel}">
+                                <MenuFlyoutItem
+								    Text="Начало ребра"
+								    Command="{Binding SetStartEdgeCommand}"
+                                    CommandParameter="{Binding WorkingNode}"/>
+                                <MenuFlyoutItem
+								    Text="Конец ребра"
+                                    Command="{Binding SetEndEdgeCommand}"
+                                    CommandParameter="{Binding WorkingNode}"/>
+                                <MenuFlyoutItem
+                                    Text="Добавить в маршрут"
+                                    Command="{Binding AddToEndOfRouteCommand}"
+                                    CommandParameter="{Binding WorkingNode}"/>
+                                <MenuFlyoutItem
+                                    Text="Удалить из маршрута"
+                                    Command="{Binding RemoveFromRouteCommand}"
+                                    CommandParameter="{Binding WorkingNode}"/>
+                                <MenuFlyoutItem
+								    Text="Удалить узел"
+                                    Command="{Binding RemoveNodeCommand}"
+                                    CommandParameter="{Binding WorkingNode}"/>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                    </elem:GraphViewElement>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+            </AbsoluteLayout.GestureRecognizers>
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout BindingContext="{StaticResource GraphLayoutViewModel}">
+                    <MenuFlyoutItem
+                        Text="Построить маршрут"
+                        Command="{Binding MakeRouteCommand}"/>
+                    <MenuFlyoutItem
+                        Text="Удалить маршрут"
+                        Command="{Binding RemoveRouteCommand}"/>
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+        </AbsoluteLayout>
+    </Grid>
+    
 </ContentPage>

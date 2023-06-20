@@ -149,7 +149,11 @@ namespace EducationMauiApp.ViewModels
 		private ICommand makeRouteCommand;
 		public ICommand MakeRouteCommand => makeRouteCommand ??= new Command(f =>
 		{
-			if (elementsOfRoute.Count > 0) RemoveRouteCommand.Execute(null);
+			if (elementsOfRoute.Count > 0 || nodesForRoute.Count < 2)
+			{
+				RemoveRouteCommand.Execute(null);
+				return;
+			}
 			GraphViewElement element;
 			var listRoutes = new List<Node>();
 			for (int i = 0; i < nodesForRoute.Count - 1; ++i)
