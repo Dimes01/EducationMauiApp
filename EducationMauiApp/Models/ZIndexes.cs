@@ -9,9 +9,9 @@ namespace EducationMauiApp.Models
 {
     internal static class ZIndexes
     {
-        public static readonly int Node = 50;
-        public static readonly int Edge = 45;
-        public static readonly int RouteNode = 60;
-        public static readonly int RouteEdge = 55;
+        public const int Node = 50;
+        public const int Edge = 45;
+        public const int RouteNode = 60;
+        public const int RouteEdge = 55;
     }
 }

@@ -9,7 +9,7 @@
 		BindableLayout.ItemsSource="{Binding 
 			Source={StaticResource GraphLayoutViewModel}, 
 			Path=GraphViewElements, 
-			Mode=OneWay}">
+			Mode=TwoWay}">
         <BindableLayout.ItemTemplate>
             <DataTemplate>
                 <elem:GraphViewElement 

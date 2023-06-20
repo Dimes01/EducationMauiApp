@@ -97,6 +97,7 @@ namespace EducationMauiApp.ViewModels
 		private ICommand removeNodeCommand;
 		public ICommand RemoveNodeCommand => removeNodeCommand ??= new Command(f =>
 		{
+			if (WorkingNode == null) return;
 			List<GraphViewElement> removeEdges = new();
 			for (int i = 0; i < GraphViewElements.Count; ++i)
 			{
@@ -111,15 +112,15 @@ namespace EducationMauiApp.ViewModels
 				removeEdges[i].GraphElement.Remove();
 			}
 
-			// Костыль
-			for (int i = 0; i < GraphViewElements.Count; ++i)
-			{
-				if (GraphViewElements[i].GraphElement is not Node) continue;
+            // не работает из-за различий в свойствах Bounds и Frame между элементами коллекции и WorkingNode
+			//GraphViewElements.Remove(WorkingNode);  
+
+            for (int i = 0; i < GraphViewElements.Count; ++i)
+			{ 
 				if (GraphViewElements[i].GraphElement != WorkingNode.GraphElement) continue;
 				GraphViewElements.RemoveAt(i);
 				break;
 			}
-			//GraphViewElements.Remove(WorkingNode);  // не работает
 			WorkingNode.GraphElement.Remove();
 			WorkingNode = null;
 		});
