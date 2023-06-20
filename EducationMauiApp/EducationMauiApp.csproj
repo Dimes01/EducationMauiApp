@@ -67,7 +67,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\GraphLib\GraphLib.csproj" />
+	  <ProjectReference Include="..\..\GraphLib\GraphLib.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
