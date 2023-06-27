@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
+			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
+             x:Class="EducationMauiApp.AndroidMainPage">
+    <SwipeView>
+        <SwipeView.RightItems>
+            <SwipeItems>
+                <SwipeItemView Background="{StaticResource SecondaryBrush}">
+                    <VerticalStackLayout 
+                        BindingContext="{StaticResource GraphLayoutViewModel}">
+                        <Label Text="Выделенная нода"/>
+                        <Button
+                            Text="Начало ребра"
+                            Command="{Binding SetStartEdgeCommand, Mode=OneWay}"/>
+                        <Button
+                            Text="Конец ребра"
+                            Command="{Binding SetEndEdgeCommand, Mode=OneWay}"/>
+                        <Button
+                            Text="Удалить"
+                            Command="{Binding RemoveNodeCommand, Mode=OneWay}"/>
+                        <Label Text="Граф"/>
+                        <Button 
+                            Text="Добавить в маршрут"
+                            Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"/>
+                        <Button 
+                            Text="Удалить из маршрута"
+                            Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"/>
+                        <Button 
+                            Text="Построить маршрут"
+                            Command="{Binding MakeRouteCommand, Mode=OneWay}"/>
+                        <Button 
+                            Text="Удалить маршрут"
+                            Command="{Binding RemoveRouteCommand, Mode=OneWay}"/>
+                    </VerticalStackLayout>
+                </SwipeItemView>
+            </SwipeItems>
+        </SwipeView.RightItems>
+        <FlexLayout 
+            Direction="Column">
+            <Picker
+                Title="Режим"
+                SelectedIndex="0"
+                SelectedIndexChanged="Picker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Выделение</x:String>
+                    <x:String>Рисование нод</x:String>
+                    <x:String>Рисование рёбер</x:String>
+                </Picker.Items>
+            </Picker>
+            <AbsoluteLayout 
+                FlexLayout.AlignSelf="Stretch"
+                FlexLayout.Grow="1"
+		        Background="{StaticResource PrimaryBrush}"
+		        BindableLayout.ItemsSource="{Binding
+                    Source={StaticResource GraphLayoutViewModel},
+                    Path=GraphViewElements,
+                    Mode=OneWay}"
+                MinimumHeightRequest="200">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <elem:GraphViewElement 
+					        Fill="{Binding Fill, Mode=OneWay}"
+					        Stroke="{Binding Stroke, Mode=OneWay}"
+					        StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+					        Geometry="{Binding Geometry, Mode=OneWay}"
+					        GraphElement="{Binding GraphElement, Mode=OneWay}"
+					        Margin="{Binding Margin, Mode=OneWay}"
+					        ZIndex="{Binding ZIndex, Mode=OneWay}">
+                            <elem:GraphViewElement.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GraphElement_Tapped"/>
+                            </elem:GraphViewElement.GestureRecognizers>
+                        </elem:GraphViewElement>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+                <AbsoluteLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+                </AbsoluteLayout.GestureRecognizers>
+            </AbsoluteLayout>
+        </FlexLayout>
+    </SwipeView>
+</ContentPage>

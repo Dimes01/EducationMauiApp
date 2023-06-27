@@ -6,10 +6,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace EducationMauiApp.ViewModels
 {
-	internal class GraphLayoutViewModel : INotifyPropertyChanged
+    public enum Modes { Selecting, DrawNode, DrawEdge }
+
+    internal class GraphLayoutViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -19,8 +22,8 @@ namespace EducationMauiApp.ViewModels
 
 		private const double radiusNode = 10;
 		private Edge tempEdge = new();
-		private List<Node> nodesForRoute = new List<Node>();
-		private List<GraphViewElement> elementsOfRoute = new List<GraphViewElement>();
+		private List<Node> nodesForRoute = new();
+		private List<GraphViewElement> elementsOfRoute = new();
 
 		public ObservableCollection<GraphViewElement> GraphViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 
@@ -36,6 +39,21 @@ namespace EducationMauiApp.ViewModels
 				OnPropertyChanged(nameof(WorkingNode));
 			}
 		}
+
+
+		private Modes currentMode = Modes.Selecting;
+		public Modes CurrentMode
+		{
+			get => currentMode;
+			set
+			{
+				if (currentMode == value) return;
+				currentMode = value;
+				tempEdge = new Edge();
+				OnPropertyChanged(nameof(CurrentMode));
+			}
+		}
+
 
 		#endregion
 
@@ -121,7 +139,9 @@ namespace EducationMauiApp.ViewModels
 				GraphViewElements.RemoveAt(i);
 				break;
 			}
+
 			WorkingNode.GraphElement.Remove();
+			WorkingNode.GraphElement = null;
 			WorkingNode = null;
 		});
 
@@ -129,21 +149,17 @@ namespace EducationMauiApp.ViewModels
 		private ICommand addToEndOfRouteCommand;
 		public ICommand AddToEndOfRouteCommand => addToEndOfRouteCommand ??= new Command(f =>
 		{
-			if (f is not GraphViewElement) return;
-			var element = ((GraphViewElement)f).GraphElement;
-			if (element is not Node) return;
-			nodesForRoute.Add(element as Node);
-		});
+            if (WorkingNode is null) return;
+            nodesForRoute.Add(WorkingNode.GraphElement as Node);
+        });
 
 
 		private ICommand removeFromRouteCommand;
 		public ICommand RemoveFromRouteCommand => removeFromRouteCommand ??= new Command(f =>
 		{
-			if (f is not GraphViewElement) return;
-			var element = ((GraphViewElement)f).GraphElement;
-			if (element is not Node) return;
-			nodesForRoute.Remove(element as Node);
-		});
+            if (WorkingNode is null) return;
+            nodesForRoute.Remove(WorkingNode.GraphElement as Node);
+        });
 
 
 		private ICommand makeRouteCommand;
@@ -188,7 +204,7 @@ namespace EducationMauiApp.ViewModels
 		#endregion
 
 		#region Вспомогательные методы
-
+		
 		private Geometry CreatedDefaultEllipse(Point position) => new EllipseGeometry { Center = position, RadiusX = radiusNode, RadiusY = radiusNode };
 		private Geometry CreatedDefaultLine(Point start, Point end)
 		{

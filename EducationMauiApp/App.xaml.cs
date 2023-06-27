@@ -4,10 +4,10 @@ namespace EducationMauiApp;
 
 public partial class App : Application
 {
-	internal static GraphLayoutViewModel GraphLayoutViewModel { get; private set; }
+    internal static GraphLayoutViewModel GraphLayoutViewModel { get; private set; }
     public App()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
         // !!! В данном случае, присваивание значения - необходимость, обусловленная тем, что при создании приложения на Android
         //	при инициализации GraphLayoutViewModel выбрасывается ошибка
@@ -15,6 +15,10 @@ public partial class App : Application
         //	связанная со статическим конструктором.
         GraphLayoutViewModel = (GraphLayoutViewModel)Current.Resources[nameof(GraphLayoutViewModel)];
 
-        MainPage = new AppShell();
+#if WINDOWS
+        MainPage = new WindowsMainPage();
+#elif ANDROID
+        MainPage = new AndroidMainPage();
+#endif
     }
 }

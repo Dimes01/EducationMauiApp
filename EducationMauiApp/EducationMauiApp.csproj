@@ -71,16 +71,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="WindowsMainPage.xaml.cs">
+	    <DependentUpon>WindowsMainPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="UIElements\GraphViewElement.xaml.cs">
 	    <DependentUpon>GraphViewElement.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="UIElements\GraphViewElement.xaml">
+	  <MauiXaml Update="AndroidMainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="UIElements\PanAndZoomView.xaml">
+	  <MauiXaml Update="UIElements\GraphViewElement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
