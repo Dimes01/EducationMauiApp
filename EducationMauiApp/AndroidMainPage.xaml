@@ -7,42 +7,58 @@
     <SwipeView>
         <SwipeView.RightItems>
             <SwipeItems>
-                <SwipeItemView Background="{StaticResource SecondaryBrush}">
+                <SwipeItemView 
+                    Background="{StaticResource SecondaryBrush}"
+                    Padding="5">
                     <VerticalStackLayout 
                         BindingContext="{StaticResource GraphLayoutViewModel}">
-                        <Label Text="Выделенная нода"/>
+                        <Label 
+                            Text="Выделенная нода"
+                            Margin="5,5,5,0"/>
                         <Button
                             Text="Начало ребра"
-                            Command="{Binding SetStartEdgeCommand, Mode=OneWay}"/>
+                            Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                         <Button
                             Text="Конец ребра"
-                            Command="{Binding SetEndEdgeCommand, Mode=OneWay}"/>
+                            Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                         <Button
                             Text="Удалить"
-                            Command="{Binding RemoveNodeCommand, Mode=OneWay}"/>
-                        <Label Text="Граф"/>
+                            Command="{Binding RemoveNodeCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
+                        <Label 
+                            Text="Граф"
+                            Margin="5,5,5,0"/>
                         <Button 
                             Text="Добавить в маршрут"
-                            Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"/>
+                            Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                         <Button 
                             Text="Удалить из маршрута"
-                            Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"/>
+                            Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                         <Button 
                             Text="Построить маршрут"
-                            Command="{Binding MakeRouteCommand, Mode=OneWay}"/>
+                            Command="{Binding MakeRouteCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                         <Button 
                             Text="Удалить маршрут"
-                            Command="{Binding RemoveRouteCommand, Mode=OneWay}"/>
+                            Command="{Binding RemoveRouteCommand, Mode=OneWay}"
+                            Style="{StaticResource SwipeMenuButton}"/>
                     </VerticalStackLayout>
                 </SwipeItemView>
             </SwipeItems>
         </SwipeView.RightItems>
         <FlexLayout 
-            Direction="Column">
+            Direction="ColumnReverse"
+            Background="{StaticResource SecondaryBrush}">
             <Picker
                 Title="Режим"
                 SelectedIndex="0"
-                SelectedIndexChanged="Picker_SelectedIndexChanged">
+                SelectedIndexChanged="Picker_SelectedIndexChanged"
+                Style="{StaticResource DefaultPicker}"
+                Margin="10,0">
                 <Picker.Items>
                     <x:String>Выделение</x:String>
                     <x:String>Рисование нод</x:String>
