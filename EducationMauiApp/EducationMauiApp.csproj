@@ -83,6 +83,9 @@
 	  <MauiXaml Update="AndroidMainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UIElements\GraphViewElement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
