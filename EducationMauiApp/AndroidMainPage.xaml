@@ -4,139 +4,76 @@
 			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
 			 x:Class="EducationMauiApp.AndroidMainPage">
-	<SwipeView>
-		<SwipeView.RightItems>
-			<SwipeItems>
-				<SwipeItemView 
-					Background="{StaticResource SecondaryBrush}"
-					Padding="5">
-					<VerticalStackLayout 
-						BindingContext="{StaticResource GraphLayoutViewModel}">
-						<Label 
-							Text="Выделенная нода"
-							Margin="5,5,5,0"/>
-						<Button
-							Text="Начало ребра"
-							Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Button
-							Text="Конец ребра"
-							Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Button
-							Text="Удалить"
-							Command="{Binding RemoveNodeCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Label 
-							Text="Граф"
-							Margin="5,5,5,0"/>
-						<Button 
-							Text="Добавить в маршрут"
-							Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Button 
-							Text="Удалить из маршрута"
-							Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Button 
-							Text="Построить маршрут"
-							Command="{Binding MakeRouteCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-						<Button 
-							Text="Удалить маршрут"
-							Command="{Binding RemoveRouteCommand, Mode=OneWay}"
-							Style="{StaticResource SwipeMenuButton}"/>
-					</VerticalStackLayout>
-				</SwipeItemView>
-			</SwipeItems>
-		</SwipeView.RightItems>
+    <Grid>
+        <AbsoluteLayout 
+			FlexLayout.AlignSelf="Stretch"
+			FlexLayout.Grow="1"
+			Background="{StaticResource PrimaryBrush}"
+			BindableLayout.ItemsSource="{Binding
+				Source={StaticResource GraphLayoutViewModel},
+				Path=GraphViewElements,
+				Mode=OneWay}"
+			MinimumHeightRequest="200">
+			<BindableLayout.ItemTemplate>
+				<DataTemplate>
+					<elem:GraphViewElement 
+						Fill="{Binding Fill, Mode=OneWay}"
+						Stroke="{Binding Stroke, Mode=OneWay}"
+						StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
+						Geometry="{Binding Geometry, Mode=OneWay}"
+						GraphElement="{Binding GraphElement, Mode=OneWay}"
+						Margin="{Binding Margin, Mode=OneWay}"
+						ZIndex="{Binding ZIndex, Mode=OneWay}">
+						<elem:GraphViewElement.GestureRecognizers>
+							<TapGestureRecognizer Tapped="GraphElement_Tapped"/>
+						</elem:GraphViewElement.GestureRecognizers>
+					</elem:GraphViewElement>
+				</DataTemplate>
+			</BindableLayout.ItemTemplate>
+			<AbsoluteLayout.GestureRecognizers>
+				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
+			</AbsoluteLayout.GestureRecognizers>
+		</AbsoluteLayout>
 		<Grid>
-			<FlexLayout 
-				Direction="ColumnReverse"
-				Background="{StaticResource SecondaryBrush}">
-				<Picker
-					Title="Режим"
-					SelectedIndex="0"
-					SelectedIndexChanged="Picker_SelectedIndexChanged"
-					Style="{StaticResource DefaultPicker}"
-					Margin="10,0">
-					<Picker.Items>
-						<x:String>Выделение</x:String>
-						<x:String>Рисование нод</x:String>
-						<x:String>Рисование рёбер</x:String>
-					</Picker.Items>
-				</Picker>
-				<AbsoluteLayout 
-					FlexLayout.AlignSelf="Stretch"
-					FlexLayout.Grow="1"
-					Background="{StaticResource PrimaryBrush}"
-					BindableLayout.ItemsSource="{Binding
-						Source={StaticResource GraphLayoutViewModel},
-						Path=GraphViewElements,
-						Mode=OneWay}"
-					MinimumHeightRequest="200">
-					<BindableLayout.ItemTemplate>
-						<DataTemplate>
-							<elem:GraphViewElement 
-								Fill="{Binding Fill, Mode=OneWay}"
-								Stroke="{Binding Stroke, Mode=OneWay}"
-								StrokeThickness="{Binding StrokeThickness, Mode=OneWay}"
-								Geometry="{Binding Geometry, Mode=OneWay}"
-								GraphElement="{Binding GraphElement, Mode=OneWay}"
-								Margin="{Binding Margin, Mode=OneWay}"
-								ZIndex="{Binding ZIndex, Mode=OneWay}">
-								<elem:GraphViewElement.GestureRecognizers>
-									<TapGestureRecognizer Tapped="GraphElement_Tapped"/>
-								</elem:GraphViewElement.GestureRecognizers>
-							</elem:GraphViewElement>
-						</DataTemplate>
-					</BindableLayout.ItemTemplate>
-					<AbsoluteLayout.GestureRecognizers>
-						<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-					</AbsoluteLayout.GestureRecognizers>
-				</AbsoluteLayout>
-			</FlexLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Border
-                    BackgroundColor="Transparent"
-                    BindingContext="{StaticResource GraphLayoutViewModel}"
-                    IsVisible="{Binding VisibilityMenuGraphElement, Mode=OneWay}"
-                    Margin="{Binding MarginMenuGraphElement, Mode=OneWay}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="5"/>
-                    </Border.StrokeShape>
-                    <VerticalStackLayout 
-						BindingContext="{StaticResource GraphLayoutViewModel}"
-                        BackgroundColor="{StaticResource Green300}">
-                        <Button
-							Text="Начало ребра"
-							Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
-							Style="{StaticResource MenuButton}"/>
-                        <Button
-							Text="Конец ребра"
-							Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
-							Style="{StaticResource MenuButton}"/>
-                        <Button
-							Text="Удалить"
-							Command="{Binding RemoveNodeCommand, Mode=OneWay}"
-							Style="{StaticResource MenuButton}"/>
-                        <Button 
-							Text="Добавить в маршрут"
-							Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
-							Style="{StaticResource MenuButton}"/>
-                        <Button 
-							Text="Удалить из маршрута"
-							Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
-							Style="{StaticResource MenuButton}"/>
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
-        </Grid>
-	</SwipeView>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Border
+				BackgroundColor="Transparent"
+				BindingContext="{StaticResource GraphLayoutViewModel}"
+				IsVisible="{Binding VisibilityMenuGraphElement, Mode=OneWay}"
+				Margin="{Binding MarginMenuGraphElement, Mode=OneWay}">
+				<Border.StrokeShape>
+					<RoundRectangle CornerRadius="5"/>
+				</Border.StrokeShape>
+				<VerticalStackLayout 
+					BindingContext="{StaticResource GraphLayoutViewModel}"
+					BackgroundColor="{StaticResource Green300}">
+					<Button
+						Text="Начало ребра"
+						Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
+						Style="{StaticResource MenuButton}"/>
+					<Button
+						Text="Конец ребра"
+						Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
+						Style="{StaticResource MenuButton}"/>
+					<Button
+						Text="Удалить"
+						Command="{Binding RemoveNodeCommand, Mode=OneWay}"
+						Style="{StaticResource MenuButton}"/>
+					<Button 
+						Text="Добавить в маршрут"
+						Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
+						Style="{StaticResource MenuButton}"/>
+					<Button 
+						Text="Удалить из маршрута"
+						Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
+						Style="{StaticResource MenuButton}"/>
+				</VerticalStackLayout>
+			</Border>
+		</Grid>
+	</Grid>
 </ContentPage>

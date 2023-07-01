@@ -41,20 +41,6 @@ namespace EducationMauiApp.ViewModels
 		}
 
 
-		private Modes currentMode = Modes.Selecting;
-		public Modes CurrentMode
-		{
-			get => currentMode;
-			set
-			{
-				if (currentMode == value) return;
-				currentMode = value;
-				tempEdge = new Edge();
-				OnPropertyChanged(nameof(CurrentMode));
-			}
-		}
-
-
 		private bool visibilityMenuGraphElement = false;
 		public bool VisibilityMenuGraphElement
 		{

@@ -36,13 +36,4 @@ public partial class WindowsMainPage : ContentPage
         if (viewElement.GraphElement is not Node) return;
         App.GraphLayoutViewModel.WorkingNode = viewElement;
     }
-
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (sender is not Picker) return;
-        var selectedItem = ((Picker)sender).SelectedItem as string;
-        if (selectedItem == "Выделение") App.GraphLayoutViewModel.CurrentMode = Modes.Selecting;
-        else if (selectedItem == "Рисование нод") App.GraphLayoutViewModel.CurrentMode = Modes.DrawNode;
-        else if (selectedItem == "Рисование рёбер") App.GraphLayoutViewModel.CurrentMode = Modes.DrawEdge;
-    }
 }

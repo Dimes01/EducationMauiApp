@@ -48,7 +48,7 @@
     <Style x:Key="MenuButton" TargetType="Button">
         <Setter Property="TextColor" Value="{StaticResource Yellow100Accent}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource Green300}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="Margin" Value="1"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
