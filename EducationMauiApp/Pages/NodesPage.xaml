@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EducationMauiApp.Pages.NodesPage"
+             Title="NodesPage"
+             BackgroundColor="{StaticResource Green600}">
+    <ScrollView>
+        <VerticalStackLayout 
+            BindableLayout.ItemsSource="{Binding
+                Source={StaticResource GraphLayoutViewModel},
+                Path=NodeViewElements, 
+                Mode=OneWay}"
+            Margin="10">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        BackgroundColor="{StaticResource Secondary}"
+                        Padding="5"
+                        Margin="0,3">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    Text="Имя:"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Entry
+                                    Grid.Column="1"/>
+                            </Grid>
+                            
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label 
+                                    Grid.Column="0"
+                                    Text="X:"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Label 
+                                    Grid.Column="1"
+                                    Text="{Binding GraphElement.Position.X, StringFormat='{0:F2}', Mode=OneWay}"
+                                    Style="{StaticResource LabelValue}"/>
+                                <Label 
+                                    Grid.Column="2"
+                                    Text="Y:"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Label 
+                                    Grid.Column="3"
+                                    Text="{Binding GraphElement.Position.Y, StringFormat='{0:F2}', Mode=OneWay}"
+                                    Style="{StaticResource LabelValue}"/>
+                            </Grid>
+                            <!--<FlexLayout Direction="Row">
+                                <Label 
+                                    Text="Цвет заливки:" FlexLayout.AlignSelf="Start"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Grid FlexLayout.AlignSelf="End">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <FlexLayout 
+                                        Grid.Column="0" 
+                                        Direction="Row">
+                                        <Label 
+                                            Text="A"
+                                            FlexLayout.AlignSelf="Center"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Entry 
+                                            Text="{Binding Fill.Color.Alpha}"
+                                            FlexLayout.AlignSelf="End"/>
+                                    </FlexLayout>
+                                    <FlexLayout 
+                                        Grid.Column="1" 
+                                        Direction="Row" AlignItems="Stretch">
+                                        <Label 
+                                            Text="R"
+                                            FlexLayout.AlignSelf="Center"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Entry 
+                                            Text="{Binding Fill.Color.Alpha, Mode=TwoWay}"
+                                            FlexLayout.AlignSelf="End"/>
+                                    </FlexLayout>
+                                    <FlexLayout 
+                                        Grid.Column="2" 
+                                        Direction="Row">
+                                        <Label 
+                                            Text="G"
+                                            FlexLayout.AlignSelf="Center"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Entry 
+                                            Text="{Binding Fill.Color.Alpha}"
+                                            FlexLayout.AlignSelf="End"/>
+                                    </FlexLayout>
+                                    <FlexLayout 
+                                        Grid.Column="3" 
+                                        Direction="Row">
+                                        <Label 
+                                            Text="B"
+                                            FlexLayout.AlignSelf="Center"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Entry 
+                                            Text="{Binding Fill.Color.Alpha}"
+                                            FlexLayout.AlignSelf="End"/>
+                                    </FlexLayout>
+                                </Grid>
+                            </FlexLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="Цвет границы:"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Label 
+                                    Text="{Binding Stroke.Color, Mode=OneWay}"
+                                    Style="{StaticResource LabelValue}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label 
+                                    Text="Толщина границы:"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Label 
+                                    Text="{Binding StrokeThickness, Mode=OneWay}"
+                                    Style="{StaticResource LabelValue}"/>
+                            </HorizontalStackLayout>-->
+                        </Grid>
+                        <!--<Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label 
+                                Grid.Row="0" Grid.Column="0"
+                                Text="Позиция X:" VerticalTextAlignment="Center"
+                                Style="{StaticResource LabelProperty}"/>
+                            <Label 
+                                Grid.Row="0" Grid.Column="1"
+                                Text="{Binding GraphElement.Position.X, StringFormat='{0:F2}', Mode=OneWay}"
+                                Style="{StaticResource LabelValue}"/>
+                            
+                            <Label
+                                Grid.Row="1" Grid.Column="0"
+                                Text="Позиция Y:" VerticalTextAlignment="Center"
+                                Style="{StaticResource LabelProperty}"/>
+                            <Label 
+                                Grid.Row="1" Grid.Column="1"
+                                Text="{Binding GraphElement.Position.Y, StringFormat='{0:F2}', Mode=OneWay}"
+                                Style="{StaticResource LabelValue}"/>
+                            
+                            <Label 
+                                Grid.Row="2" Grid.Column="0"
+                                Text="Цвет заливки:" VerticalTextAlignment="Center"
+                                Style="{StaticResource LabelProperty}"/>
+                            <Label 
+                                Grid.Row="2" Grid.Column="1"
+                                Text="{Binding Fill.Color, Mode=OneWay}"
+                                Style="{StaticResource LabelValue}"/>
+                            
+                            <Label
+                                Grid.Row="3" Grid.Column="0"
+                                Text="Цвет границы:" VerticalTextAlignment="Center"
+                                Style="{StaticResource LabelProperty}"/>
+                            <Label 
+                                Grid.Row="3" Grid.Column="1"
+                                Text="{Binding Stroke.Color, Mode=OneWay}"
+                                Style="{StaticResource LabelValue}"/>
+                            
+                            <Label 
+                                Grid.Row="4" Grid.Column="0"
+                                Text="Толщина границы:"
+                                Style="{StaticResource LabelProperty}"/>
+                            <Label 
+                                Grid.Row="4" Grid.Column="1"
+                                Text="{Binding StrokeThickness, Mode=OneWay}"
+                                Style="{StaticResource LabelValue}"/>
+                        </Grid>-->
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

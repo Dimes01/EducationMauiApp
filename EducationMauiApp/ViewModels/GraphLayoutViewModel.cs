@@ -26,9 +26,11 @@ namespace EducationMauiApp.ViewModels
 		private List<GraphViewElement> elementsOfRoute = new();
 
 		public ObservableCollection<GraphViewElement> GraphViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
+		public ObservableCollection<GraphViewElement> NodeViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
+        public ObservableCollection<GraphViewElement> EdgeViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 
 
-		private GraphViewElement workingNode;
+        private GraphViewElement workingNode;
 		public GraphViewElement WorkingNode
 		{
 			get => workingNode;
@@ -83,6 +85,7 @@ namespace EducationMauiApp.ViewModels
 				Margin = new Thickness(node.Position.X - radiusNode, node.Position.Y - radiusNode, 0, 0)
 			};
 			GraphViewElements.Add(viewNode);
+			NodeViewElements.Add(viewNode);
 		});
 
 
@@ -190,7 +193,7 @@ namespace EducationMauiApp.ViewModels
 			var listRoutes = new List<Node>();
 			for (int i = 0; i < nodesForRoute.Count - 1; ++i)
 			{
-				listRoutes = Route.GetRoute(nodesForRoute[i], nodesForRoute[i + 1]);
+				listRoutes = Route.AStar(nodesForRoute[i], nodesForRoute[i + 1]);
 				for (int j = 0; j < listRoutes.Count - 1; ++j)
 				{
 					SetNodeOfRouteToElements(listRoutes[j]);
@@ -269,6 +272,7 @@ namespace EducationMauiApp.ViewModels
 				Margin = new Thickness(minOfCoordinates.X, minOfCoordinates.Y, 0, 0),
 			};
 			GraphViewElements.Add(viewEdge);
+			EdgeViewElements.Add(viewEdge);
 		}
 
 		#endregion

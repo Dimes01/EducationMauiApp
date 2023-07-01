@@ -5,7 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:EducationMauiApp"
     xmlns:pages="clr-namespace:EducationMauiApp.Pages"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Flyout"
+    Shell.BackgroundColor="{StaticResource Secondary}"
+    Shell.ForegroundColor="{StaticResource Yellow100Accent}"
+    FlyoutBackgroundColor="{StaticResource Secondary}"
+    Background="{StaticResource SecondaryBrush}">
+    
     <ShellContent
         Title="Карта"
         ContentTemplate="{OnPlatform 
@@ -17,4 +22,8 @@
         ContentTemplate="{OnPlatform
             Android={DataTemplate pages:AndroidRoutePage}}"
         Route="RoutePage"/>
+    <ShellContent
+        Title="Ноды"
+        ContentTemplate="{DataTemplate pages:NodesPage}"
+        Route="Nodes"/>
 </Shell>
