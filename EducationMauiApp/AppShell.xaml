@@ -7,8 +7,10 @@
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{OnPlatform Android={DataTemplate local:AndroidMainPage}}"
+        Title="Карта"
+        ContentTemplate="{OnPlatform 
+            Android={DataTemplate local:AndroidMainPage}, 
+            WinUI={DataTemplate local:WindowsMainPage}}"
         Route="MainPage" />
-
+    
 </Shell>

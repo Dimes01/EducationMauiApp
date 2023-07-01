@@ -15,10 +15,11 @@ public partial class App : Application
         //	связанная со статическим конструктором.
         GraphLayoutViewModel = (GraphLayoutViewModel)Current.Resources[nameof(GraphLayoutViewModel)];
 
-#if WINDOWS
-        MainPage = new WindowsMainPage();
-#elif ANDROID
-        MainPage = new AndroidMainPage();
-#endif
+        MainPage = new AppShell();
+//#if WINDOWS
+//        MainPage = new WindowsMainPage();
+//#elif ANDROID
+//        MainPage = new AndroidMainPage();
+//#endif
     }
 }

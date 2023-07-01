@@ -13,6 +13,12 @@ public partial class AndroidMainPage : ContentPage
 
     private void GraphLayout_Tapped(object sender, TappedEventArgs e)
     {
+        if (App.GraphLayoutViewModel.VisibilityMenuGraphElement)
+        {
+            App.GraphLayoutViewModel.CloseMenuGraphElement();
+            return;
+        }
+
         if (App.GraphLayoutViewModel.CurrentMode == Modes.DrawNode)
         {
             var node = new Node((Point)e.GetPosition((View)sender));
@@ -28,6 +34,8 @@ public partial class AndroidMainPage : ContentPage
         else if (graphElement is Node)
         {
             App.GraphLayoutViewModel.WorkingNode = viewElement;
+            App.GraphLayoutViewModel.CloseMenuGraphElement();
+            App.GraphLayoutViewModel.OpenMenuGraphElement((graphElement as Node).Position);
         }
         
         if (App.GraphLayoutViewModel.CurrentMode == Modes.DrawNode)
@@ -37,11 +45,11 @@ public partial class AndroidMainPage : ContentPage
             if (pos is null) return;
             App.GraphLayoutViewModel.AddNodeCommand.Execute(new Node((Point)pos));
         }
-        else if (App.GraphLayoutViewModel.CurrentMode == Modes.DrawEdge)
-        {
-            if (graphElement is Edge) return;
-            App.GraphLayoutViewModel.AddEdgeCommand.Execute(graphElement);
-        }
+        //else if (App.GraphLayoutViewModel.CurrentMode == Modes.DrawEdge)
+        //{
+        //    if (graphElement is Edge) return;
+        //    App.GraphLayoutViewModel.AddEdgeCommand.Execute(graphElement);
+        //}
     }
 
     private void Picker_SelectedIndexChanged(object sender, EventArgs e)

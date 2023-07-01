@@ -55,6 +55,31 @@ namespace EducationMauiApp.ViewModels
 		}
 
 
+		private bool visibilityMenuGraphElement = false;
+		public bool VisibilityMenuGraphElement
+		{
+			get => visibilityMenuGraphElement;
+			private set
+			{
+				if (visibilityMenuGraphElement == value) return;
+				visibilityMenuGraphElement = value;
+				OnPropertyChanged(nameof(VisibilityMenuGraphElement));
+			}
+		}
+
+		private Thickness marginMenuGraphElement = Thickness.Zero;
+		public Thickness MarginMenuGraphElement
+		{
+			get => marginMenuGraphElement;
+			private set
+			{
+				if (marginMenuGraphElement == value) return;
+				marginMenuGraphElement = value;
+				OnPropertyChanged(nameof(MarginMenuGraphElement));
+			}
+		}
+
+
 		#endregion
 
 		#region Команды
@@ -100,6 +125,7 @@ namespace EducationMauiApp.ViewModels
 			if (WorkingNode is null) return;
 			tempEdge.Nodes[0] = (Node)WorkingNode.GraphElement;
 			if (tempEdge.Nodes[0] != null && tempEdge.Nodes[1] != null) AddEdgeCommand.Execute(null);
+			CloseMenuGraphElement();
 		});
 
 
@@ -109,6 +135,7 @@ namespace EducationMauiApp.ViewModels
 			if (WorkingNode is null) return;
 			tempEdge.Nodes[1] = (Node)WorkingNode.GraphElement;
 			if (tempEdge.Nodes[0] != null && tempEdge.Nodes[1] != null) AddEdgeCommand.Execute(null);
+			CloseMenuGraphElement();
 		});
 
 
@@ -143,6 +170,7 @@ namespace EducationMauiApp.ViewModels
 			WorkingNode.GraphElement.Remove();
 			WorkingNode.GraphElement = null;
 			WorkingNode = null;
+			CloseMenuGraphElement();
 		});
 
 
@@ -151,6 +179,7 @@ namespace EducationMauiApp.ViewModels
 		{
             if (WorkingNode is null) return;
             nodesForRoute.Add(WorkingNode.GraphElement as Node);
+			CloseMenuGraphElement();
         });
 
 
@@ -159,6 +188,7 @@ namespace EducationMauiApp.ViewModels
 		{
             if (WorkingNode is null) return;
             nodesForRoute.Remove(WorkingNode.GraphElement as Node);
+			CloseMenuGraphElement();
         });
 
 
@@ -217,6 +247,15 @@ namespace EducationMauiApp.ViewModels
 						Segments = new PathSegmentCollection { new LineSegment(end) }
 					}
 				});
+		}
+		public void OpenMenuGraphElement(Point point)
+		{
+			VisibilityMenuGraphElement = true;
+			MarginMenuGraphElement = new Thickness(point.X, point.Y, 0, 0);
+		}
+		public void CloseMenuGraphElement()
+		{
+			VisibilityMenuGraphElement = false;
 		}
 		private void SetNodeOfRouteToElements(Node node)
 		{
