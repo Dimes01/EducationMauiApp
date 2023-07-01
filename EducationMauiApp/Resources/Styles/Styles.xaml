@@ -49,7 +49,7 @@
         <Setter Property="TextColor" Value="{StaticResource Yellow100Accent}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource Green300}"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="Padding" Value="5,2"/>
         <Setter Property="Margin" Value="1"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

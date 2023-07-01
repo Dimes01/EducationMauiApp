@@ -4,13 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:EducationMauiApp"
+    xmlns:pages="clr-namespace:EducationMauiApp.Pages"
     Shell.FlyoutBehavior="Flyout">
-
     <ShellContent
         Title="Карта"
         ContentTemplate="{OnPlatform 
             Android={DataTemplate local:AndroidMainPage}, 
             WinUI={DataTemplate local:WindowsMainPage}}"
-        Route="MainPage" />
-    
+        Route="MainPage"/>
+    <ShellContent
+        Title="Маршруты"
+        ContentTemplate="{OnPlatform
+            Android={DataTemplate pages:AndroidRoutePage}}"
+        Route="RoutePage"/>
 </Shell>

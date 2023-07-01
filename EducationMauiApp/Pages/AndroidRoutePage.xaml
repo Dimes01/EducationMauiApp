@@ -3,5 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EducationMauiApp.Pages.AndroidRoutePage"
              Title="AndroidRoutePage">
-    
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Label Text="A-Star"/>
+            </Grid>
+            <Grid>
+                <Label Text="Алгоритм Дейкстры"/>
+            </Grid>
+            <Grid>
+                <Label Text="Обход в ширину"/>
+            </Grid>
+            <Grid>
+                <Label Text="Эвристический поиск"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
