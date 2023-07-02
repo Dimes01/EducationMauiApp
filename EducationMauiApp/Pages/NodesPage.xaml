@@ -49,21 +49,17 @@
                                     </Grid.ColumnDefinitions>
                                     <HorizontalStackLayout Grid.Column="0">
                                         <Label 
-                                        Grid.Column="0"
-                                        Text="X:"
-                                        Style="{StaticResource LabelProperty}"/>
+                                            Text="X:"
+                                            Style="{StaticResource LabelProperty}"/>
                                         <Label 
-                                        Grid.Column="1"
-                                        Text="{Binding GraphElement.Position.X, StringFormat='{0:F2}', Mode=OneWay}"
-                                        Style="{StaticResource LabelValue}"/>
+                                            Text="{Binding GraphElement.Position.X, StringFormat='{0:F2}', Mode=OneWay}"
+                                            Style="{StaticResource LabelValue}"/>
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Grid.Column="1">
                                         <Label 
-                                            Grid.Column="2"
                                             Text="Y:"
                                             Style="{StaticResource LabelProperty}"/>
                                         <Label 
-                                            Grid.Column="3"
                                             Text="{Binding GraphElement.Position.Y, StringFormat='{0:F2}', Mode=OneWay}"
                                             Style="{StaticResource LabelValue}"/>
                                     </HorizontalStackLayout>
