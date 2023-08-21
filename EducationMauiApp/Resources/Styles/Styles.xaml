@@ -30,8 +30,31 @@
         <Setter Property="TextColor" Value="{StaticResource Yellow100Accent}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource Green300}"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="MinimumHeightRequest" Value="30"/>
         <Setter Property="Padding" Value="5,2"/>
         <Setter Property="Margin" Value="1"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SingleButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="5,4"/>
+        <Setter Property="Margin" Value="10,5"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

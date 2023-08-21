@@ -22,12 +22,12 @@ namespace EducationMauiApp.ViewModels
 
 		private const double radiusNode = 10;
 		private Edge tempEdge = new();
-		private List<Node> nodesForRoute = new();
 		private List<GraphViewElement> elementsOfRoute = new();
 
 		public ObservableCollection<GraphViewElement> GraphViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
 		public ObservableCollection<GraphViewElement> NodeViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
         public ObservableCollection<GraphViewElement> EdgeViewElements { get; private set; } = new ObservableCollection<GraphViewElement>();
+		public ObservableCollection<Node> NodesForRoute { get; private set; } = new ObservableCollection<Node>();
 
 
         private GraphViewElement workingNode;
@@ -167,7 +167,7 @@ namespace EducationMauiApp.ViewModels
 		public ICommand AddToEndOfRouteCommand => addToEndOfRouteCommand ??= new Command(f =>
 		{
             if (WorkingNode is null) return;
-            nodesForRoute.Add(WorkingNode.GraphElement as Node);
+            NodesForRoute.Add(WorkingNode.GraphElement as Node);
 			CloseMenuGraphElement();
         });
 
@@ -176,7 +176,7 @@ namespace EducationMauiApp.ViewModels
 		public ICommand RemoveFromRouteCommand => removeFromRouteCommand ??= new Command(f =>
 		{
             if (WorkingNode is null) return;
-            nodesForRoute.Remove(WorkingNode.GraphElement as Node);
+            NodesForRoute.Remove(WorkingNode.GraphElement as Node);
 			CloseMenuGraphElement();
         });
 
@@ -184,16 +184,16 @@ namespace EducationMauiApp.ViewModels
 		private ICommand makeRouteCommand;
 		public ICommand MakeRouteCommand => makeRouteCommand ??= new Command(f =>
 		{
-			if (elementsOfRoute.Count > 0 || nodesForRoute.Count < 2)
+			if (elementsOfRoute.Count > 0 || NodesForRoute.Count < 2)
 			{
 				RemoveRouteCommand.Execute(null);
 				return;
 			}
 			GraphViewElement element;
 			var listRoutes = new List<Node>();
-			for (int i = 0; i < nodesForRoute.Count - 1; ++i)
+			for (int i = 0; i < NodesForRoute.Count - 1; ++i)
 			{
-				listRoutes = Route.AStar(nodesForRoute[i], nodesForRoute[i + 1]);
+				listRoutes = Route.AStar(NodesForRoute[i], NodesForRoute[i + 1]);
 				for (int j = 0; j < listRoutes.Count - 1; ++j)
 				{
 					SetNodeOfRouteToElements(listRoutes[j]);
@@ -205,7 +205,7 @@ namespace EducationMauiApp.ViewModels
 					element.StrokeThickness = 4;
 				}
 			}
-			SetNodeOfRouteToElements(nodesForRoute.Last());
+			SetNodeOfRouteToElements(NodesForRoute.Last());
 		});
 
 
@@ -215,7 +215,7 @@ namespace EducationMauiApp.ViewModels
 			for (int i = 0; i < elementsOfRoute.Count; ++i) 
 				GraphViewElements.Remove(elementsOfRoute[i]);
 			elementsOfRoute.Clear();
-			nodesForRoute.Clear();
+			NodesForRoute.Clear();
 		});
 
 

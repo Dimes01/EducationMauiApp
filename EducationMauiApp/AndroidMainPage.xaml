@@ -5,6 +5,10 @@
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
 			 x:Class="EducationMauiApp.AndroidMainPage">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <AbsoluteLayout 
 			FlexLayout.AlignSelf="Stretch"
 			FlexLayout.Grow="1"
@@ -34,46 +38,35 @@
 				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
 			</AbsoluteLayout.GestureRecognizers>
 		</AbsoluteLayout>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<Border
-				BackgroundColor="Transparent"
+        <Border
+            Grid.Row="1"
+			BackgroundColor="Transparent"
+			BindingContext="{StaticResource GraphLayoutViewModel}"
+			IsVisible="{Binding VisibilityMenuGraphElement, Mode=OneWay}">
+            <VerticalStackLayout 
 				BindingContext="{StaticResource GraphLayoutViewModel}"
-				IsVisible="{Binding VisibilityMenuGraphElement, Mode=OneWay}"
-				Margin="{Binding MarginMenuGraphElement, Mode=OneWay}">
-				<Border.StrokeShape>
-					<RoundRectangle CornerRadius="5"/>
-				</Border.StrokeShape>
-				<VerticalStackLayout 
-					BindingContext="{StaticResource GraphLayoutViewModel}"
-					BackgroundColor="{StaticResource Green300}">
-					<Button
-						Text="Начало ребра"
-						Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
-						Style="{StaticResource MenuButton}"/>
-					<Button
-						Text="Конец ребра"
-						Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
-						Style="{StaticResource MenuButton}"/>
-					<Button
-						Text="Удалить"
-						Command="{Binding RemoveNodeCommand, Mode=OneWay}"
-						Style="{StaticResource MenuButton}"/>
-					<Button 
-						Text="Добавить в маршрут"
-						Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
-						Style="{StaticResource MenuButton}"/>
-					<Button 
-						Text="Удалить из маршрута"
-						Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
-						Style="{StaticResource MenuButton}"/>
-				</VerticalStackLayout>
-			</Border>
-		</Grid>
+				BackgroundColor="{StaticResource Green300}">
+				<Button
+					Text="Начало ребра"
+					Command="{Binding SetStartEdgeCommand, Mode=OneWay}"
+					Style="{StaticResource MenuButton}"/>
+				<Button
+					Text="Конец ребра"
+					Command="{Binding SetEndEdgeCommand, Mode=OneWay}"
+					Style="{StaticResource MenuButton}"/>
+				<Button
+					Text="Удалить"
+					Command="{Binding RemoveNodeCommand, Mode=OneWay}"
+					Style="{StaticResource MenuButton}"/>
+				<Button 
+					Text="Добавить в маршрут"
+					Command="{Binding AddToEndOfRouteCommand, Mode=OneWay}"
+					Style="{StaticResource MenuButton}"/>
+				<Button 
+					Text="Удалить из маршрута"
+					Command="{Binding RemoveFromRouteCommand, Mode=OneWay}"
+					Style="{StaticResource MenuButton}"/>
+			</VerticalStackLayout>
+		</Border>
 	</Grid>
 </ContentPage>

@@ -3,19 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EducationMauiApp.Pages.AndroidRoutePage"
              Title="AndroidRoutePage">
-    <ScrollView>
+    <ScrollView BackgroundColor="{StaticResource Secondary}">
         <VerticalStackLayout>
+            <Label 
+                Text="Маршрутные точки"
+                Style="{StaticResource LabelProperty}"/>
+            <VerticalStackLayout 
+                BindingContext="{StaticResource GraphLayoutViewModel}"
+                BindableLayout.ItemsSource="{Binding NodesForRoute}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            BackgroundColor="{StaticResource Green400}"
+                            Padding="5"
+                            Margin="10,3">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <StackLayout>
+                                <Label 
+                                    Text="Позиция:" 
+                                    Grid.Row="0"
+                                    Style="{StaticResource LabelProperty}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <HorizontalStackLayout>
+                                        <Label 
+                                            Text="X:"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Label 
+                                            Text="{Binding Position.X}"
+                                            Style="{StaticResource LabelValue}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="1">
+                                        <Label 
+                                            Text="Y:"
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelProperty}"/>
+                                        <Label 
+                                            Text="{Binding Position.Y}"
+                                            Grid.Column="1"
+                                            Style="{StaticResource LabelValue}"/>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Button 
+                Text="Построить маршрут"
+                Style="{StaticResource SingleButton}"/>
             <Grid>
-                <Label Text="A-Star"/>
+                <Label 
+                    Text="Алгоритм Дейкстры"
+                    Style="{StaticResource LabelProperty}"/>
             </Grid>
             <Grid>
-                <Label Text="Алгоритм Дейкстры"/>
-            </Grid>
-            <Grid>
-                <Label Text="Обход в ширину"/>
-            </Grid>
-            <Grid>
-                <Label Text="Эвристический поиск"/>
+                <Label 
+                    Text="Эвристический поиск"
+                    Style="{StaticResource LabelProperty}"/>
             </Grid>
         </VerticalStackLayout>
     </ScrollView>
