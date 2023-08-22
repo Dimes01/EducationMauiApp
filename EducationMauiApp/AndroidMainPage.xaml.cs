@@ -1,6 +1,7 @@
 using EducationMauiApp.UIElements;
 using EducationMauiApp.ViewModels;
 using GraphLib.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EducationMauiApp;
 
@@ -39,5 +40,15 @@ public partial class AndroidMainPage : ContentPage
         var pos = e.GetPosition(viewElement.Parent as View);
         if (pos is null) return;
         App.GraphLayoutViewModel.AddNodeCommand.Execute(new Node((Point)pos));
+    }
+
+    private void GraphPanel_PanUpdated(object sender, PanUpdatedEventArgs e)
+    {
+        var panel = sender as AbsoluteLayout;
+        if (e.StatusType == GestureStatus.Running)
+        {
+            panel.TranslationX += e.TotalX;
+            panel.TranslationY += e.TotalY;
+        }
     }
 }

@@ -4,7 +4,7 @@
 			 xmlns:vm="clr-namespace:EducationMauiApp.ViewModels"
 			 xmlns:elem="clr-namespace:EducationMauiApp.UIElements"
 			 x:Class="EducationMauiApp.AndroidMainPage">
-    <Grid>
+    <Grid IsClippedToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -36,7 +36,8 @@
 			</BindableLayout.ItemTemplate>
 			<AbsoluteLayout.GestureRecognizers>
 				<TapGestureRecognizer Tapped="GraphLayout_Tapped"/>
-			</AbsoluteLayout.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="GraphPanel_PanUpdated"/>
+            </AbsoluteLayout.GestureRecognizers>
 		</AbsoluteLayout>
         <Border
             Grid.Row="1"

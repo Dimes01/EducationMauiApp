@@ -1,11 +1,11 @@
 ﻿using EducationMauiApp.UIElements;
-using EducationMauiApp.ViewModels;
 using GraphLib.Models;
 
 namespace EducationMauiApp;
 
 public partial class WindowsMainPage : ContentPage
 {
+    private double panX, panY;
 	public WindowsMainPage()
 	{
 		InitializeComponent();
@@ -35,5 +35,20 @@ public partial class WindowsMainPage : ContentPage
         var viewElement = sender as GraphViewElement;
         if (viewElement.GraphElement is not Node) return;
         App.GraphLayoutViewModel.WorkingNode = viewElement;
+    }
+
+    private void GraphPanel_PanUpdated(object sender, PanUpdatedEventArgs e)
+    {
+        var panel = sender as AbsoluteLayout;
+        if (e.StatusType == GestureStatus.Running)
+        {
+            panel.TranslationX = Math.Clamp(panX + e.TotalX, -panel.Width, panel.Height);
+            panel.TranslationY = Math.Clamp(panY + e.TotalY, -panel.Width, panel.Height);
+        }
+        else if (e.StatusType == GestureStatus.Completed)
+        {
+            panX = panel.TranslationX;
+            panY = panel.TranslationY;
+        }
     }
 }
